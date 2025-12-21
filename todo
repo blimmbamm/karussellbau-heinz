@@ -1,0 +1,18 @@
+/
+/news
+/karussell-1
+/karussell-2
+/karussell-3
+/polyesterbau
+/kontakt
+
+
+- how to only have exactly one navigation document?
+
+// "queries": "../web/lib/sanity/queries/**/*.ts",
+
+Check + apply this:
+https://www.sanity.io/docs/help/configuring-typegen-in-sanity-cli-config
+
+- is it possible to do extracting s.t. schema.json lives outside of folder?
+- run both commands (schema extract AND typegen/generate) from inside cms folder, set output folders accordingly
