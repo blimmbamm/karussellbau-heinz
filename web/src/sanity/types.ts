@@ -59,6 +59,7 @@ export type Page = {
   _rev: string;
   title?: string;
   slug?: Slug;
+  isHome?: boolean;
   content?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -218,8 +219,41 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ..\web\src\sanity\queries.ts
+// Variable: slugsQuery
+// Query: *[    _type == "page" &&    defined(slug.current) &&    isHome != true  ]{    "slug": slug.current  }
+export type SlugsQueryResult = Array<{
+  slug: string | null;
+}>;
+
+// Source: ..\web\src\sanity\queries.ts
+// Variable: homepageQuery
+// Query: *[_type == "page" && isHome == true][0]{    _id,    title,    content  }
+export type HomepageQueryResult = {
+  _id: string;
+  title: string | null;
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
+
+// Source: ..\web\src\sanity\queries.ts
 // Variable: pageBySlugQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    content  }
+// Query: *[_type == "page" && slug.current == $slug && isHome != true][0]{    _id,    title,    "slug": slug.current,    content  }
 export type PageBySlugQueryResult = {
   _id: string;
   title: string | null;
@@ -271,7 +305,9 @@ export type NavigationQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "page" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    content\n  }\n': PageBySlugQueryResult;
+    '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current\n  }\n': SlugsQueryResult;
+    '\n  *[_type == "page" && isHome == true][0]{\n    _id,\n    title,\n    content\n  }\n': HomepageQueryResult;
+    '\n  *[_type == "page" && slug.current == $slug && isHome != true][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    content\n  }\n': PageBySlugQueryResult;
     '\n  *[_type == "navigation"][0]{\n    items[]{\n      _key,\n      label,\n      type,\n      page->{ title, "slug": slug.current },\n      items[]{\n        _key,\n        label,\n        page->{ title, "slug": slug.current }\n      }\n    }\n  }\n': NavigationQueryResult;
   }
 }

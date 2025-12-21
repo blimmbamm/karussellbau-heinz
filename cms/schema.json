@@ -239,6 +239,13 @@
         },
         "optional": true
       },
+      "isHome": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "content": {
         "type": "objectAttribute",
         "value": {
