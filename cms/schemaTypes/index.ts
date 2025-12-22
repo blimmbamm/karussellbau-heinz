@@ -1,6 +1,13 @@
 import {navigationType} from './documents/navigation'
 import {pageType} from './documents/page'
-import {navItemType} from './objects/navigation/navItem'
-import {navSubItemType} from './objects/navigation/navSubItem'
+import {navDropdownType} from './objects/navigation/navDropdown'
+import {navDropdownItemType} from './objects/navigation/navDropdownItem'
+import {navLinkType} from './objects/navigation/navLink'
 
-export const schemaTypes = [pageType, navigationType, navItemType, navSubItemType]
+export const schemaTypes = [
+  pageType,
+  navigationType,
+  navLinkType,
+  navDropdownType,
+  navDropdownItemType,
+]

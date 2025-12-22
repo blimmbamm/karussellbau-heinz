@@ -30,7 +30,7 @@
     }
   },
   {
-    "name": "navSubItem",
+    "name": "navDropdownItem",
     "type": "type",
     "value": {
       "type": "object",
@@ -39,7 +39,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "navSubItem"
+            "value": "navDropdownItem"
           }
         },
         "label": {
@@ -61,7 +61,7 @@
     }
   },
   {
-    "name": "navItem",
+    "name": "navDropdown",
     "type": "type",
     "value": {
       "type": "object",
@@ -70,38 +70,13 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "navItem"
+            "value": "navDropdown"
           }
         },
         "label": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
-          },
-          "optional": true
-        },
-        "type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "link"
-              },
-              {
-                "type": "string",
-                "value": "dropdown"
-              }
-            ]
-          },
-          "optional": true
-        },
-        "page": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "page.reference"
           },
           "optional": true
         },
@@ -121,9 +96,40 @@
               },
               "rest": {
                 "type": "inline",
-                "name": "navSubItem"
+                "name": "navDropdownItem"
               }
             }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "navLink",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "navLink"
+          }
+        },
+        "label": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "page": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "page.reference"
           },
           "optional": true
         }
@@ -170,19 +176,39 @@
         "value": {
           "type": "array",
           "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
+            "type": "union",
+            "of": [
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "navLink"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "navDropdown"
                 }
               }
-            },
-            "rest": {
-              "type": "inline",
-              "name": "navItem"
-            }
+            ]
           }
         },
         "optional": true

@@ -29,5 +29,24 @@ export default async function Page({
     notFound();
   }
 
-  return <div>{pageData.title}</div>;
+  let previous = null;
+  let next = null;
+
+  const dropdownItems = pageData.page?.navContext?.dropdown?.items;
+  if (dropdownItems) {
+    const currentItemIndex = dropdownItems.findIndex(
+      (item) => item.page?._ref === pageData.page?._id
+    );
+
+    previous = dropdownItems[currentItemIndex - 1] ?? null;
+    next = dropdownItems[currentItemIndex + 1] ?? null;
+  }
+
+  return (
+    <div>
+      <p>Previous: {previous?.label}</p>
+      <p>Next: {next?.label}</p>
+      <p>{pageData.page?.title}</p>
+    </div>
+  );
 }

@@ -40,7 +40,7 @@ export default async function RootLayout({
           <nav>
             {navigationItems?.items?.map((item) => (
               <div key={item._key}>
-                {item.label}: {item.type}
+                {item.label}: {item._type}
               </div>
             ))}
           </nav>

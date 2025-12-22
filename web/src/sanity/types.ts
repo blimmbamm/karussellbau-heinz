@@ -20,22 +20,26 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
-export type NavSubItem = {
-  _type: "navSubItem";
+export type NavDropdownItem = {
+  _type: "navDropdownItem";
   label?: string;
   page?: PageReference;
 };
 
-export type NavItem = {
-  _type: "navItem";
+export type NavDropdown = {
+  _type: "navDropdown";
   label?: string;
-  type?: "link" | "dropdown";
-  page?: PageReference;
   items?: Array<
     {
       _key: string;
-    } & NavSubItem
+    } & NavDropdownItem
   >;
+};
+
+export type NavLink = {
+  _type: "navLink";
+  label?: string;
+  page?: PageReference;
 };
 
 export type Navigation = {
@@ -45,9 +49,12 @@ export type Navigation = {
   _updatedAt: string;
   _rev: string;
   items?: Array<
-    {
-      _key: string;
-    } & NavItem
+    | ({
+        _key: string;
+      } & NavLink)
+    | ({
+        _key: string;
+      } & NavDropdown)
   >;
 };
 
@@ -200,8 +207,9 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | PageReference
-  | NavSubItem
-  | NavItem
+  | NavDropdownItem
+  | NavDropdown
+  | NavLink
   | Navigation
   | Page
   | Slug
@@ -253,52 +261,61 @@ export type HomepageQueryResult = {
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: pageBySlugQuery
-// Query: *[_type == "page" && slug.current == $slug && isHome != true][0]{    _id,    title,    "slug": slug.current,    content  }
+// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true    ][0]{      _id,      title,      content,      "slug": slug.current,      "navContext": *[_type == "navigation"][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0]      }    }  }
 export type PageBySlugQueryResult = {
-  _id: string;
-  title: string | null;
-  slug: string | null;
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
+  page: {
+    _id: string;
+    title: string | null;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
       _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-} | null;
+    }> | null;
+    slug: string | null;
+    navContext: {
+      dropdown:
+        | ({
+            _key: string;
+          } & NavDropdown)
+        | null;
+    } | null;
+  } | null;
+};
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: navigationQuery
-// Query: *[_type == "navigation"][0]{    items[]{      _key,      label,      type,      page->{ title, "slug": slug.current },      items[]{        _key,        label,        page->{ title, "slug": slug.current }      }    }  }
+// Query: *[_type == "navigation"][0]{    items[]{      _type,      _key,      label,      _type == "navLink" => {        "slug": page->slug.current      },      _type == "navDropdown" => {        items[]{          label,          "slug": page->slug.current        }      }    }  }
 export type NavigationQueryResult = {
-  items: Array<{
-    _key: string;
-    label: string | null;
-    type: "dropdown" | "link" | null;
-    page: {
-      title: string | null;
-      slug: string | null;
-    } | null;
-    items: Array<{
-      _key: string;
-      label: string | null;
-      page: {
-        title: string | null;
+  items: Array<
+    | {
+        _type: "navDropdown";
+        _key: string;
+        label: string | null;
+        items: Array<{
+          label: string | null;
+          slug: string | null;
+        }> | null;
+      }
+    | {
+        _type: "navLink";
+        _key: string;
+        label: string | null;
         slug: string | null;
-      } | null;
-    }> | null;
-  }> | null;
+      }
+  > | null;
 } | null;
 
 // Query TypeMap
@@ -307,7 +324,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current\n  }\n': SlugsQueryResult;
     '\n  *[_type == "page" && isHome == true][0]{\n    _id,\n    title,\n    content\n  }\n': HomepageQueryResult;
-    '\n  *[_type == "page" && slug.current == $slug && isHome != true][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    content\n  }\n': PageBySlugQueryResult;
-    '\n  *[_type == "navigation"][0]{\n    items[]{\n      _key,\n      label,\n      type,\n      page->{ title, "slug": slug.current },\n      items[]{\n        _key,\n        label,\n        page->{ title, "slug": slug.current }\n      }\n    }\n  }\n': NavigationQueryResult;
+    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      content,\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0]\n      }\n    }\n  }\n': PageBySlugQueryResult;
+    '\n  *[_type == "navigation"][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;
   }
 }

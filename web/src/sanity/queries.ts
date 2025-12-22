@@ -19,25 +19,40 @@ export const homepageQuery = groq`
 `;
 
 export const pageBySlugQuery = groq`
-  *[_type == "page" && slug.current == $slug && isHome != true][0]{
-    _id,
-    title,
-    "slug": slug.current,
-    content
+  {
+    "page": *[
+      _type == "page" &&
+      slug.current == $slug && 
+      isHome != true
+    ][0]{
+      _id,
+      title,
+      content,
+      "slug": slug.current,
+      "navContext": *[_type == "navigation"][0]{
+        "dropdown": items[
+          _type == "navDropdown" && 
+          (count(items[page._ref == ^.^.^._id]) > 0)
+        ][0]
+      }
+    }
   }
 `;
 
 export const navigationQuery = groq`
   *[_type == "navigation"][0]{
     items[]{
+      _type,
       _key,
       label,
-      type,
-      page->{ title, "slug": slug.current },
-      items[]{
-        _key,
-        label,
-        page->{ title, "slug": slug.current }
+      _type == "navLink" => {
+        "slug": page->slug.current
+      },
+      _type == "navDropdown" => {
+        items[]{
+          label,
+          "slug": page->slug.current
+        }
       }
     }
   }

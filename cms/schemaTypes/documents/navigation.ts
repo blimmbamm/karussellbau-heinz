@@ -10,7 +10,7 @@ export const navigationType = defineType({
       name: 'items',
       title: 'Navigation items',
       type: 'array',
-      of: [{type: 'navItem'}],
+      of: [{type: 'navLink'}, {type: 'navDropdown'}],
     }),
   ],
 })
