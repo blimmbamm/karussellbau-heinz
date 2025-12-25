@@ -27,13 +27,28 @@ export const pageBySlugQuery = groq`
     ][0]{
       _id,
       title,
-      content,
+      content[]{
+        ...,
+        _type == "imageGallery" => {
+          ...,
+          images[]{
+            ...,
+            "url": asset->url
+          }
+        }
+      },
       "slug": slug.current,
       "navContext": *[_type == "navigation"][0]{
         "dropdown": items[
           _type == "navDropdown" && 
           (count(items[page._ref == ^.^.^._id]) > 0)
-        ][0]
+        ][0] {
+          ...,
+          items[]{
+            ...,
+            "slug": page->slug.current
+          }
+        }
       }
     }
   }

@@ -15,8 +15,8 @@ import { NavigationQueryResult } from "../src/sanity/types";
 //   subsets: ["latin"],
 // });
 
-export const dynamic = 'error'
-export const revalidate = false
+export const dynamic = "error";
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: "Karussellbau Heinz",
@@ -37,7 +37,14 @@ export default async function RootLayout({
       // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header>
-          <nav>
+          <nav
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              backgroundColor: "lightblue",
+            }}
+          >
             {navigationItems?.items?.map((item) => (
               <div key={item._key}>
                 {item.label}: {item._type}

@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const pageType = defineType({
   name: 'page',
@@ -45,8 +45,7 @@ export const pageType = defineType({
 
     defineField({
       name: 'content',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'blockContent',
     }),
   ],
 })

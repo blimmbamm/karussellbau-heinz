@@ -58,6 +58,63 @@ export type Navigation = {
   >;
 };
 
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ImageGallery = {
+  _type: "imageGallery";
+  images?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    caption?: string;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
+export type ColumnText = {
+  _type: "columnText";
+  col1?: BlockContent;
+  col2?: BlockContent;
+};
+
+export type BlockContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<
+        {
+          _key: string;
+        } & Anchor
+      >;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & ColumnText)
+  | ({
+      _key: string;
+    } & ImageGallery)
+  | ({
+      _key: string;
+    } & Table)
+>;
+
 export type Page = {
   _id: string;
   _type: "page";
@@ -67,30 +124,48 @@ export type Page = {
   title?: string;
   slug?: Slug;
   isHome?: boolean;
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  content?: BlockContent;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
+};
+
+export type Anchor = {
+  _type: "anchor";
+  slug?: Slug;
+};
+
+export type Table = {
+  _type: "table";
+  rows?: Array<
+    {
+      _key: string;
+    } & TableRow
+  >;
+};
+
+export type TableRow = {
+  _type: "tableRow";
+  cells?: Array<string>;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -128,22 +203,6 @@ export type SanityImageMetadata = {
   blurHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
 };
 
 export type SanityFileAsset = {
@@ -211,14 +270,21 @@ export type AllSanitySchemaTypes =
   | NavDropdown
   | NavLink
   | Navigation
+  | SanityImageAssetReference
+  | ImageGallery
+  | ColumnText
+  | BlockContent
   | Page
+  | SanityImageCrop
+  | SanityImageHotspot
   | Slug
+  | Anchor
+  | Table
+  | TableRow
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
   | SanityImageMetadata
-  | SanityImageHotspot
-  | SanityImageCrop
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
@@ -239,58 +305,88 @@ export type SlugsQueryResult = Array<{
 export type HomepageQueryResult = {
   _id: string;
   title: string | null;
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
+  content: BlockContent | null;
 } | null;
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: pageBySlugQuery
-// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true    ][0]{      _id,      title,      content,      "slug": slug.current,      "navContext": *[_type == "navigation"][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0]      }    }  }
+// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true    ][0]{      _id,      title,      content[]{        ...,        _type == "imageGallery" => {          ...,          images[]{            ...,            "url": asset->url          }        }      },      "slug": slug.current,      "navContext": *[_type == "navigation"][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0] {          ...,          items[]{            ...,            "slug": page->slug.current          }        }      }    }  }
 export type PageBySlugQueryResult = {
   page: {
     _id: string;
     title: string | null;
-    content: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
+    content: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?:
+            | "blockquote"
+            | "h1"
+            | "h2"
+            | "h3"
+            | "h4"
+            | "h5"
+            | "h6"
+            | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<
+            {
+              _key: string;
+            } & Anchor
+          >;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }
+      | {
+          _key: string;
+          _type: "columnText";
+          col1?: BlockContent;
+          col2?: BlockContent;
+        }
+      | {
+          _key: string;
+          _type: "imageGallery";
+          images: Array<{
+            asset?: SanityImageAssetReference;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            caption?: string;
+            alt?: string;
+            _type: "image";
+            _key: string;
+            url: string | null;
+          }> | null;
+        }
+      | {
+          _key: string;
+          _type: "table";
+          rows?: Array<
+            {
+              _key: string;
+            } & TableRow
+          >;
+        }
+    > | null;
     slug: string | null;
     navContext: {
-      dropdown:
-        | ({
-            _key: string;
-          } & NavDropdown)
-        | null;
+      dropdown: {
+        _key: string;
+        _type: "navDropdown";
+        label?: string;
+        items: Array<{
+          _key: string;
+          _type: "navDropdownItem";
+          label?: string;
+          page?: PageReference;
+          slug: string | null;
+        }> | null;
+      } | null;
     } | null;
   } | null;
 };
@@ -324,7 +420,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current\n  }\n': SlugsQueryResult;
     '\n  *[_type == "page" && isHome == true][0]{\n    _id,\n    title,\n    content\n  }\n': HomepageQueryResult;
-    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      content,\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0]\n      }\n    }\n  }\n': PageBySlugQueryResult;
+    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      content[]{\n        ...,\n        _type == "imageGallery" => {\n          ...,\n          images[]{\n            ...,\n            "url": asset->url\n          }\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
     '\n  *[_type == "navigation"][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;
   }
 }
