@@ -1,0 +1,19 @@
+:root {
+  --max-width: 1000px;
+
+  --header-color: #eadfb2ff;
+  --main-color: #fffbe7ff;
+
+  --font-color-dark-gray: #595959;
+  --font-color-dark-brown: #6a4a3c;
+
+  --thick-brown-border: solid 3px var(--font-color-dark-brown);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}

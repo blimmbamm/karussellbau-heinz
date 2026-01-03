@@ -1,0 +1,42 @@
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url(/background_stripes.png);
+  background-position: top left;
+  background-repeat: repeat;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  padding-bottom: 15px;
+  background-image: url(/background_stripes.png);
+  background-position: top left;
+  background-repeat: repeat;
+  z-index: 10;
+}
+
+.navbar {
+  display: flow-root;
+  background-color: var(--header-color);
+  border-bottom: var(--thick-brown-border);
+}
+
+.main {
+  display: flow-root;
+  max-width: var(--max-width);
+  background-color: var(--main-color);
+  margin-inline: auto;
+}
+
+.border {
+  position: fixed;
+  width: var(--max-width);
+  height: 100%;
+  left: calc((100% - var(--max-width)) / 2);
+  border: var(--thick-brown-border);
+  border-bottom: none;
+  z-index: 1;
+  pointer-events: none;
+}

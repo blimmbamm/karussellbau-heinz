@@ -1,0 +1,17 @@
+@media (min-width: 768px) {
+  .container {
+    display: none;
+  }
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  & h1 {
+    flex: 1;
+    text-align: center;
+  }
+}

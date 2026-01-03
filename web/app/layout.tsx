@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import styles from "./layout.module.css";
 import { client } from "../src/sanity/client";
 import { navigationQuery } from "../src/sanity/queries";
 import { NavigationQueryResult } from "../src/sanity/types";
+import DesktopNav from "../components/navigation/DesktopNav";
+import MobileNav from "../components/navigation/MobileNav";
+import Footer from "../components/footer/Footer";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -28,7 +32,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const navigationItems =
+  const navigationQueryResult =
     await client.fetch<NavigationQueryResult>(navigationQuery);
 
   return (
@@ -36,23 +40,18 @@ export default async function RootLayout({
       <body
       // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header>
-          <nav
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              backgroundColor: "lightblue",
-            }}
-          >
-            {navigationItems?.items?.map((item) => (
-              <div key={item._key}>
-                {item.label}: {item._type}
-              </div>
-            ))}
+        <div className={styles.background} />
+        <header className={styles.header}>
+          <nav className={styles.navbar}>
+            <DesktopNav navQueryResult={navigationQueryResult} />
+            <MobileNav navQueryResult={navigationQueryResult} />
           </nav>
         </header>
-        <main>{children}</main>
+        <div className={styles.border} />
+        <main className={styles.main}>
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   );
