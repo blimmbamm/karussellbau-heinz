@@ -5,9 +5,9 @@ import styles from "./layout.module.css";
 import { client } from "../src/sanity/client";
 import { navigationQuery } from "../src/sanity/queries";
 import { NavigationQueryResult } from "../src/sanity/types";
-import MobileNav from "../components/navigation/MobileNav";
 import Footer from "../components/footer/Footer";
 import DesktopNav from "../components/navigation/desktop/DesktopNav";
+import MobileNav from "../components/navigation/mobile/MobileNav";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",

@@ -1,5 +1,6 @@
 .root {
   position: relative;
+  display: block;
   padding-bottom: 2px;
   padding-inline: 5px;
 

@@ -1,0 +1,45 @@
+@media (min-width: 768px) {
+  .container {
+    display: none;
+  }
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 20px;
+  padding-block: 10px;
+  background-color: var(--header-color);
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 40px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.drawer {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(-100%);
+  z-index: 1;
+}
+
+.drawer-content {
+  margin-top: 21px; /*15px (gap width) + 2+3px border*/
+  background-color: var(--main-color);
+  flex: 1;
+}
+
+.open {
+  transform: translateY(0);
+}

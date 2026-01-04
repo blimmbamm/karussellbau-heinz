@@ -1,0 +1,22 @@
+.root {
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 24px;
+}
+
+.dropdown-back-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  font-weight: bold;
+  transform: translateX(calc(-12px - 4px));
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
