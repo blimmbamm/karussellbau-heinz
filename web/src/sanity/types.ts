@@ -393,7 +393,7 @@ export type PageBySlugQueryResult = {
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: navigationQuery
-// Query: *[_type == "navigation"][0]{    items[]{      _type,      _key,      label,      _type == "navLink" => {        "slug": page->slug.current      },      _type == "navDropdown" => {        items[]{          label,          "slug": page->slug.current        }      }    }  }
+// Query: *[_type == "navigation"][0]{    items[]{      _type,      _key,      label,      _type == "navLink" => {        "slug": page->slug.current      },      _type == "navDropdown" => {        items[]{          label,          _key,          "slug": page->slug.current        }      }    }  }
 export type NavigationQueryResult = {
   items: Array<
     | {
@@ -402,6 +402,7 @@ export type NavigationQueryResult = {
         label: string | null;
         items: Array<{
           label: string | null;
+          _key: string;
           slug: string | null;
         }> | null;
       }
@@ -421,6 +422,6 @@ declare module "@sanity/client" {
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current\n  }\n': SlugsQueryResult;
     '\n  *[_type == "page" && isHome == true][0]{\n    _id,\n    title,\n    content\n  }\n': HomepageQueryResult;
     '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      content[]{\n        ...,\n        _type == "imageGallery" => {\n          ...,\n          images[]{\n            ...,\n            "url": asset->url\n          }\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
-    '\n  *[_type == "navigation"][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;
+    '\n  *[_type == "navigation"][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          _key,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;
   }
 }

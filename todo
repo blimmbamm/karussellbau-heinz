@@ -37,3 +37,6 @@ Then:
 - read docs on images and then on portable text
 
 - how to change icon of custom mark/annotation?
+
+
+- rename NavDropdownItem s.t. that it's different from generated type

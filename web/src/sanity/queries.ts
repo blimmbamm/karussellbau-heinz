@@ -66,6 +66,7 @@ export const navigationQuery = groq`
       _type == "navDropdown" => {
         items[]{
           label,
+          _key,
           "slug": page->slug.current
         }
       }
