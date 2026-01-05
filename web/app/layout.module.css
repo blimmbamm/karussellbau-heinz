@@ -37,6 +37,16 @@
   left: calc((100% - var(--max-width)) / 2);
   border: var(--thick-brown-border);
   border-bottom: none;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.main-top-spacer {
+  position: fixed;
+  width: var(--max-width);
+  height: 64px;
+  left: calc((100% - var(--max-width)) / 2);
+  background-color: var(--main-color);
   z-index: 1;
   pointer-events: none;
 }

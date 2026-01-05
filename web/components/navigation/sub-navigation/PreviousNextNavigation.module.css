@@ -1,0 +1,16 @@
+.root {
+  position: sticky;
+  top: 150;
+  display: flex;
+  z-index: 3;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  background-color: var(--main-color);
+}

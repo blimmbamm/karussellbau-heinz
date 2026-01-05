@@ -1,0 +1,20 @@
+.root {
+  position: sticky;
+  top: 200;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-wrap: nowrap;
+}
+
+.title {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}

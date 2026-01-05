@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import styles from "./layout.module.css";
 import { client } from "../src/sanity/client";
 import { navigationQuery } from "../src/sanity/queries";
 import { NavigationQueryResult } from "../src/sanity/types";
@@ -10,15 +7,8 @@ import DesktopNav from "../components/navigation/desktop/DesktopNav";
 import MobileNav from "../components/navigation/mobile/MobileNav";
 import { greatVibesFont, nunitoFont } from "../styles/font";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import "./globals.css";
+import styles from "./layout.module.css";
 
 export const dynamic = "error";
 export const revalidate = false;
@@ -38,10 +28,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body
-        className={`${greatVibesFont.variable} ${nunitoFont.className}`}
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${greatVibesFont.variable} ${nunitoFont.className}`}>
         <div className={styles.background} />
         <header className={styles.header}>
           <nav className={styles.navbar}>
@@ -50,6 +37,7 @@ export default async function RootLayout({
           </nav>
         </header>
         <div className={styles.border} />
+        <div className={styles["main-top-spacer"]} />
         <main className={styles.main}>
           {children}
           <Footer />

@@ -1,0 +1,15 @@
+.root {
+  padding-block: 20px;
+  padding-inline: 40px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row-reverse;
+  overflow: visible;
+  gap: 40px;
+}
+
+.anchor-target {
+  scroll-margin-top: 200px;
+}

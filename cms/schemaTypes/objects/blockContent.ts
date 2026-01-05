@@ -6,7 +6,10 @@ export const blockContentType = defineType({
   of: [
     defineArrayMember({
       type: 'block',
-      // styles: [{title: 'Whatever', value: 'some value'}],
+      styles: [
+        {title: 'Page title', value: 'h1'},
+        {title: 'Section title', value: 'h2'},
+      ],
       marks: {
         annotations: [
           {

@@ -9,6 +9,9 @@ import {
 } from "../../src/sanity/types";
 import { PortableText, PortableTextTypeComponentProps } from "next-sanity";
 import ImageGallery from "../../components/ImageGallery";
+import styles from "./page.module.css";
+import PreviousNextNavigation from "../../components/navigation/sub-navigation/PreviousNextNavigation";
+import TableOfContents from "../../components/navigation/sub-navigation/TableOfContents";
 
 type PageContent = NonNullable<
   NonNullable<PageBySlugQueryResult["page"]>["content"]
@@ -36,105 +39,70 @@ export default async function Page({
   });
 
   if (!pageData) {
+    // TODO: I think this is not the correct check
     notFound();
   }
 
-  let previous = null;
-  let next = null;
-
-  const dropdownItems = pageData.page?.navContext?.dropdown?.items;
-  if (dropdownItems) {
-    const currentItemIndex = dropdownItems.findIndex(
-      (item) => item.page?._ref === pageData.page?._id
-    );
-
-    previous = dropdownItems[currentItemIndex - 1] ?? null;
-    next = dropdownItems[currentItemIndex + 1] ?? null;
-  }
-
-  console.log(dropdownItems);
-
-  const tableOfContents = pageData.page?.content
-    ?.filter((b) => b._type === "block")
-    .flatMap((block) =>
-      block.children?.flatMap(
-        (child) =>
-          child.marks?.map((mark: string) => {
-            const def = block.markDefs?.find(
-              (d) => d._key === mark && d._type === "anchor"
-            );
-            if (!def?.slug?.current) return null;
-
-            return {
-              label: block?.children?.map((c: any) => c.text).join(""),
-              href: `#${def.slug.current}`,
-            };
-          }) ?? []
-      )
-    )
-    .filter(Boolean);
-
-  console.log(tableOfContents);
-
   return (
-    <div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        {previous?.label && (
-          <a href={previous?.slug ?? ""}>← {previous?.label}</a>
-        )}
-        <div style={{ flex: 1 }} />
-        {next?.label && <a href={next?.slug ?? ""}>{next?.label} →</a>}
-      </div>
-      {/* <p>{pageData.page?.title}</p> */}
-      <p>Content:</p>
-      {tableOfContents?.map((tocItem) => (
-        <div key={tocItem?.href}>
-          <a href={tocItem?.href}>{tocItem?.label}</a>
+    <div className={styles.root}>
+      <PreviousNextNavigation pageData={pageData} />
+
+      <div className={styles.container}>
+        <TableOfContents pageData={pageData} />
+        <div>
+          {pageData.page?.content && (
+            <PortableText
+              value={pageData.page?.content}
+              components={{
+                marks: {
+                  anchor: ({ value, children }) => (
+                    <span
+                      id={value.slug?.current}
+                      className={styles["anchor-target"]}
+                    >
+                      {!value.hidden && children}
+                    </span>
+                  ),
+                },
+                block: {
+                  h1: ({ children }) => (
+                    <div
+                      style={{
+                        // backgroundColor: "green",
+                        fontSize: 48,
+                        textAlign: "center",
+                        // padding: 20,
+                      }}
+                    >
+                      {children}
+                    </div>
+                  ),
+                },
+                types: {
+                  columnText: ({
+                    value,
+                  }: PortableTextTypeComponentProps<ColumnText>) => (
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <div>
+                        {value.col1 && <PortableText value={value.col1} />}
+                      </div>
+                      <div>
+                        {value.col2 && <PortableText value={value.col2} />}
+                      </div>
+                    </div>
+                  ),
+                  imageGallery: (
+                    props: PortableTextTypeComponentProps<ImageGalleryBlock>
+                  ) =>
+                    props.value.images && (
+                      <ImageGallery images={props.value.images} />
+                    ),
+                },
+              }}
+            />
+          )}
         </div>
-      ))}
-      <hr />
-      {pageData.page?.content && (
-        <PortableText
-          value={pageData.page?.content}
-          components={{
-            marks: {
-              anchor: ({ value, children }) => (
-                <span id={value.slug?.current}>{children}</span>
-              ),
-            },
-            block: {
-              h1: ({ children }) => (
-                <div
-                  style={{
-                    backgroundColor: "green",
-                    fontSize: 48,
-                    textAlign: "center",
-                    padding: 20,
-                  }}
-                >
-                  {children}
-                </div>
-              ),
-            },
-            types: {
-              columnText: ({
-                value,
-              }: PortableTextTypeComponentProps<ColumnText>) => (
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div>{value.col1 && <PortableText value={value.col1} />}</div>
-                  <div>{value.col2 && <PortableText value={value.col2} />}</div>
-                </div>
-              ),
-              imageGallery: (
-                props: PortableTextTypeComponentProps<ImageGalleryBlock>
-              ) =>
-                props.value.images && (
-                  <ImageGallery images={props.value.images} />
-                ),
-            },
-          }}
-        />
-      )}
+      </div>
     </div>
   );
 }

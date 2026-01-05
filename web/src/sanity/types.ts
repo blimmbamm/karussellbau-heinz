@@ -93,7 +93,7 @@ export type BlockContent = Array<
         _type: "span";
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      style?: "normal" | "h1" | "h2";
       listItem?: "bullet" | "number";
       markDefs?: Array<
         {
@@ -152,6 +152,8 @@ export type Slug = {
 export type Anchor = {
   _type: "anchor";
   slug?: Slug;
+  label?: string;
+  hidden?: boolean;
 };
 
 export type Table = {
@@ -323,15 +325,7 @@ export type PageBySlugQueryResult = {
             _type: "span";
             _key: string;
           }>;
-          style?:
-            | "blockquote"
-            | "h1"
-            | "h2"
-            | "h3"
-            | "h4"
-            | "h5"
-            | "h6"
-            | "normal";
+          style?: "h1" | "h2" | "normal";
           listItem?: "bullet" | "number";
           markDefs?: Array<
             {
