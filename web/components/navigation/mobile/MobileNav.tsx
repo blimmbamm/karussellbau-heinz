@@ -28,7 +28,11 @@ export default function MobileNav({ navQueryResult }: Props) {
         >
           Karussellbau Heinz
         </Link>
-        <Menu size={36} onClick={() => setDrawerOpen(true)} />
+        <Menu
+          className={styles["menu-toggle"]}
+          strokeWidth={3}
+          onClick={() => setDrawerOpen(true)}
+        />
       </div>
       <div className={`${styles.drawer} ${drawerOpen ? styles.open : ""} `}>
         <div className={styles.navbar}>
@@ -39,7 +43,11 @@ export default function MobileNav({ navQueryResult }: Props) {
           >
             Karussellbau Heinz
           </Link>
-          <X size={36} onClick={handleCloseDrawer} />
+          <X
+            className={styles["menu-toggle"]}
+            strokeWidth={3}
+            onClick={handleCloseDrawer}
+          />
         </div>
         <div className={styles["drawer-content"]}>
           <MobileDrawer

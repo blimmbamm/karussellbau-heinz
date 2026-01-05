@@ -5,7 +5,9 @@
   --main-color: #fffbe7ff;
   --red-color: #cc333fff;
 
+  
   --font-color-dark-gray: #595959;
+  --font-color-darker-gray: #3f3f3f;
   --font-color-dark-brown: #6a4a3c;
 
   --thick-brown-border: solid 3px var(--font-color-dark-brown);
@@ -17,4 +19,5 @@
 
 body {
   margin: 0;
+  color: var(--font-color-darker-gray);
 }

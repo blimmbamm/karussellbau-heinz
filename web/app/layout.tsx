@@ -8,6 +8,7 @@ import { NavigationQueryResult } from "../src/sanity/types";
 import Footer from "../components/footer/Footer";
 import DesktopNav from "../components/navigation/desktop/DesktopNav";
 import MobileNav from "../components/navigation/mobile/MobileNav";
+import { greatVibesFont, nunitoFont } from "../styles/font";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -38,7 +39,8 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${greatVibesFont.variable} ${nunitoFont.className}`}
+        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className={styles.background} />
         <header className={styles.header}>

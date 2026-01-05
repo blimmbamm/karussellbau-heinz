@@ -17,9 +17,10 @@
 .title {
   display: block;
   margin-top: 16px;
-  margin-bottom: 8px;
   text-decoration: none;
-  color: inherit;
   font-size: 40px;
   text-align: center;
+  font-family: var(--font-great-vibes);
+  font-weight: bold;
+  color: var(--font-color-dark-brown);
 }
