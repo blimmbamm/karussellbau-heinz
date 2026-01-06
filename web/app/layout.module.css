@@ -45,8 +45,16 @@
   position: fixed;
   width: var(--max-width);
   height: 64px;
+  height: 54px;
   left: calc((100% - var(--max-width)) / 2);
   background-color: var(--main-color);
+  /* background-color: lightgreen; */
   z-index: 1;
   pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .main-top-spacer {
+    height: 48px;
+  }
 }

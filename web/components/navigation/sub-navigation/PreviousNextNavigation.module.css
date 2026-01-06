@@ -1,8 +1,15 @@
 .root {
   position: sticky;
-  top: 150;
+  top: 140;
   display: flex;
   z-index: 3;
+  padding-top: 4px;
+}
+
+@media (max-width: 767px) {
+  .root {
+    top: 90;
+  }
 }
 
 .link {
@@ -13,4 +20,5 @@
   align-items: center;
   padding: 8px;
   background-color: var(--main-color);
+  /* background-color: salmon; */
 }

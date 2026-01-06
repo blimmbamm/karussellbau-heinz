@@ -8,6 +8,12 @@
   text-wrap: nowrap;
 }
 
+@media (max-width: 767px) {
+  .root {
+    display: none;
+  }
+}
+
 .title {
   font-weight: bold;
   text-transform: uppercase;
