@@ -1,24 +1,23 @@
 .root {
   position: sticky;
-  top: 140;
+  top: var(--height-header);
   display: flex;
   z-index: 3;
-  padding-top: 4px;
 }
 
 @media (max-width: 767px) {
   .root {
-    top: 90;
+    top: var(--height-header-mobile);
   }
 }
 
 .link {
   text-decoration: none;
+  line-height: 1;
   color: inherit;
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
   align-items: center;
-  padding: 8px;
-  background-color: var(--main-color);
+  padding: 0.75rem;
   /* background-color: salmon; */
 }

@@ -28,34 +28,26 @@ export default function MobileNav({ navQueryResult }: Props) {
         >
           Karussellbau Heinz
         </Link>
-        <Menu
-          className={styles["menu-toggle"]}
-          strokeWidth={3}
-          onClick={() => setDrawerOpen(true)}
-        />
-      </div>
-      <div className={`${styles.drawer} ${drawerOpen ? styles.open : ""} `}>
-        <div className={styles.navbar}>
-          <Link
-            href={"/"}
-            className={styles.title}
-            onNavigate={handleCloseDrawer}
-          >
-            Karussellbau Heinz
-          </Link>
+        {drawerOpen ? (
           <X
             className={styles["menu-toggle"]}
             strokeWidth={3}
             onClick={handleCloseDrawer}
           />
-        </div>
-        <div className={styles["drawer-content"]}>
-          <MobileDrawer
-            navQueryResult={navQueryResult}
-            key={drawerOpen.toString()}
-            onClose={handleCloseDrawer}
+        ) : (
+          <Menu
+            className={styles["menu-toggle"]}
+            strokeWidth={3}
+            onClick={() => setDrawerOpen(true)}
           />
-        </div>
+        )}
+      </div>
+      <div className={`${styles.drawer} ${drawerOpen ? styles.open : ""} `}>
+        <MobileDrawer
+          navQueryResult={navQueryResult}
+          key={drawerOpen.toString()}
+          onClose={handleCloseDrawer}
+        />
       </div>
     </div>
   );

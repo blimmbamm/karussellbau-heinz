@@ -10,11 +10,17 @@
 .header {
   position: sticky;
   top: 0;
-  padding-bottom: 15px;
   background-image: url(/background_stripes.png);
   background-position: top left;
   background-repeat: repeat;
   z-index: 10;
+  height: var(--height-header);
+}
+
+@media (max-width: 767px) {
+  .header {
+    height: var(--height-header-mobile);
+  }
 }
 
 .navbar {
@@ -44,17 +50,10 @@
 .main-top-spacer {
   position: fixed;
   width: var(--max-width);
-  height: 64px;
-  height: 54px;
+  height: 2.5rem; /* height of prev/next sub nav */
   left: calc((100% - var(--max-width)) / 2);
   background-color: var(--main-color);
   /* background-color: lightgreen; */
   z-index: 1;
   pointer-events: none;
-}
-
-@media (max-width: 767px) {
-  .main-top-spacer {
-    height: 48px;
-  }
 }

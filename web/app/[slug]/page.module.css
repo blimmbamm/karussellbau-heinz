@@ -8,9 +8,8 @@
   flex-direction: row-reverse;
   overflow: visible;
   gap: 40px;
-  margin-top: 10px;
 }
 
 .anchor-target {
-  scroll-margin-top: 200px;
+  scroll-margin-top: calc(7.25rem + 2.5rem);
 }

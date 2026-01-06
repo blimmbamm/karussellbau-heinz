@@ -10,6 +10,10 @@
   --font-color-dark-brown: #6a4a3c;
 
   --thick-brown-border: solid 3px var(--font-color-dark-brown);
+
+  --height-header: 7.25rem;
+  --height-header-mobile: 5.75rem;
+
 }
 
 * {

@@ -9,16 +9,16 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  padding-inline: 20px;
-  padding-block: 10px;
+  gap: 1rem;
+  padding-inline: 1.25rem;
+  padding-block: 0.625rem;
   background-color: var(--header-color);
 }
 
 .title {
   flex: 1;
   text-align: center;
-  font-size: 40px;
+  font-size: 2.5rem;
   text-decoration: none;
   font-family: var(--font-great-vibes);
   font-weight: bold;
@@ -34,20 +34,11 @@
 
 .drawer {
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transform: translateY(-100%);
-  z-index: 1;
-}
-
-.drawer-content {
-  margin-top: 21px; /*15px (gap width) + 2+3px border*/
+  inset: 0;
+  top: var(--height-header-mobile);
+  transform: translateY(calc(-200% - var(--height-header-mobile)));
   background-color: var(--main-color);
-  flex: 1;
+  border-top: var(--thick-brown-border);
 }
 
 .open {
