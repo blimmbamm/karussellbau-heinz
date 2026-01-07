@@ -1,13 +1,12 @@
 .root {
-  /* padding-block: 20px; */
-  padding-inline: 40px;
+  padding-inline: 2.5rem;
 }
 
 .container {
   display: flex;
   flex-direction: row-reverse;
   overflow: visible;
-  gap: 40px;
+  gap: 2.5rem;
 }
 
 .anchor-target {

@@ -1,20 +1,22 @@
 .root {
-  padding: 16px;
+  padding: 1rem;
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  font-size: 24px;
+  gap: 1rem;
+  font-size: 1.5rem;
 }
 
 .dropdown-back-container {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
   align-items: center;
   font-weight: bold;
-  font-size: 28px;
-  transform: translateX(calc(-12px - 4px));
+  font-size: 1.75rem;
+
+  /* Half of icon size and half of gap*/
+  transform: translateX(calc(-12px - 0.25rem)); 
 }
 
 .link {
