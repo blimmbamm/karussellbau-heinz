@@ -1,6 +1,28 @@
 .footer {
-  /* background-color: var(--header-color); */
-  padding: 20px;
-  text-align: center;
-  /* border-top: var(--thick-brown-border); */
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 1.25rem;
+  padding-top: 2rem;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .horizontal-divider {
+    display: none;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
