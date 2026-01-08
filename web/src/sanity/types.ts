@@ -312,12 +312,21 @@ export type HomepageQueryResult = {
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: pageBySlugQuery
-// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true    ][0]{      _id,      title,      content[]{        ...,        _type == "imageGallery" => {          ...,          images[]{            ...,            "url": asset->url          }        }      },      "slug": slug.current,      "navContext": *[_type == "navigation"][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0] {          ...,          items[]{            ...,            "slug": page->slug.current          }        }      }    }  }
+// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true    ][0]{      _id,      title,      content[],      "slug": slug.current,      "navContext": *[_type == "navigation"][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0] {          ...,          items[]{            ...,            "slug": page->slug.current          }        }      }    }  }
 export type PageBySlugQueryResult = {
   page: {
     _id: string;
     title: string | null;
     content: Array<
+      | ({
+          _key: string;
+        } & ColumnText)
+      | ({
+          _key: string;
+        } & ImageGallery)
+      | ({
+          _key: string;
+        } & Table)
       | {
           children?: Array<{
             marks?: Array<string>;
@@ -335,36 +344,6 @@ export type PageBySlugQueryResult = {
           level?: number;
           _type: "block";
           _key: string;
-        }
-      | {
-          _key: string;
-          _type: "columnText";
-          col1?: BlockContent;
-          col2?: BlockContent;
-        }
-      | {
-          _key: string;
-          _type: "imageGallery";
-          images: Array<{
-            asset?: SanityImageAssetReference;
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            caption?: string;
-            alt?: string;
-            _type: "image";
-            _key: string;
-            url: string | null;
-          }> | null;
-        }
-      | {
-          _key: string;
-          _type: "table";
-          rows?: Array<
-            {
-              _key: string;
-            } & TableRow
-          >;
         }
     > | null;
     slug: string | null;
@@ -415,7 +394,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current\n  }\n': SlugsQueryResult;
     '\n  *[_type == "page" && isHome == true][0]{\n    _id,\n    title,\n    content\n  }\n': HomepageQueryResult;
-    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      content[]{\n        ...,\n        _type == "imageGallery" => {\n          ...,\n          images[]{\n            ...,\n            "url": asset->url\n          }\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
+    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      content[],\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
     '\n  *[_type == "navigation"][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          _key,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;
   }
 }

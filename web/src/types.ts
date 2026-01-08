@@ -1,7 +1,22 @@
-import { NavigationQueryResult } from "./sanity/types";
+import {
+  ImageGallery,
+  NavigationQueryResult,
+  PageBySlugQueryResult,
+} from "./sanity/types";
 
 export type NavItemType = NonNullable<
   NonNullable<NavigationQueryResult>["items"]
 >[number];
 
 export type NavDropdownItem = Extract<NavItemType, { _type: "navDropdown" }>;
+
+export type ImageGalleryImageType = NonNullable<ImageGallery["images"]>[number];
+
+export type PageContent = NonNullable<
+  NonNullable<PageBySlugQueryResult["page"]>["content"]
+>;
+
+export type ImageGalleryBlock = Extract<
+  PageContent[number],
+  { _type: "imageGallery" }
+>;

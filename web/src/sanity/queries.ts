@@ -27,16 +27,7 @@ export const pageBySlugQuery = groq`
     ][0]{
       _id,
       title,
-      content[]{
-        ...,
-        _type == "imageGallery" => {
-          ...,
-          images[]{
-            ...,
-            "url": asset->url
-          }
-        }
-      },
+      content[],
       "slug": slug.current,
       "navContext": *[_type == "navigation"][0]{
         "dropdown": items[
