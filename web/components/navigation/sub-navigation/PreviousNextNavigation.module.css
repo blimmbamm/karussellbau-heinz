@@ -15,10 +15,23 @@
   text-decoration: none;
   line-height: 1;
   color: inherit;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
   padding: 1.25rem;
   padding-bottom: 0.75rem;
-  /* background-color: salmon; */
+}
+
+.label {
+  display: flex;
+  position: relative;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.label:hover::after {
+  content: "";
+  position: absolute;
+  bottom: -2;
+  left: -1;
+  right: -1;
+  height: 1px;
+  background-color: var(--font-color-darker-gray);
 }

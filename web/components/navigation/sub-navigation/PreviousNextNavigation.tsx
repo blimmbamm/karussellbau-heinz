@@ -28,20 +28,19 @@ export default function PreviousNextNavigation({ pageData }: Props) {
     <div className={styles.root}>
       {previous?.label && (
         <Link className={styles.link} href={previous?.slug ?? ""}>
-          <MoveLeft size={16} />
-          <span>{previous?.label}</span>
+          <div className={styles.label}>
+            <MoveLeft size={16} />
+            <span>{previous?.label}</span>
+          </div>
         </Link>
       )}
-      <Link className={styles.link} href={previous?.slug ?? ""}>
-        <MoveLeft size={16} />
-        <span>{"Karussell 0"}</span>
-      </Link>
-
       <div style={{ flex: 1 }} />
       {next?.label && (
         <Link className={styles.link} href={next?.slug ?? ""}>
-          <span>{next?.label}</span>
-          <MoveRight size={16} />
+          <div className={styles.label}>
+            <span>{next?.label}</span>
+            <MoveRight size={16} />
+          </div>
         </Link>
       )}
     </div>
