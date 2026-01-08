@@ -50,7 +50,7 @@
 .main-top-spacer {
   position: fixed;
   width: var(--max-width);
-  height: 2.5rem; /* height of prev/next sub nav */
+  height: 3rem; /* height of prev/next sub nav */
   left: calc((100% - var(--max-width)) / 2);
   background-color: var(--main-color);
   /* background-color: lightgreen; */
