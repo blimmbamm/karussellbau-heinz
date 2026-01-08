@@ -19,8 +19,6 @@ export default function ImageGallery({ images }: Props) {
     (image) => image._key === fullscreenStartImg?._key
   );
 
-  console.log(startIndex);
-
   useEffect(() => {
     if (fullscreenStartImg) {
       lockBodyScroll();

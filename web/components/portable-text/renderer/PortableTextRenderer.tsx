@@ -1,8 +1,9 @@
 import { PortableText, PortableTextTypeComponentProps } from "next-sanity";
 import { ImageGalleryBlock, PageContent } from "../../../src/types";
 import styles from "./PortableTextRenderer.module.css";
-import { ColumnText } from "../../../src/sanity/types";
+import { ColumnText, Table as TableType } from "../../../src/sanity/types";
 import ImageGallery from "../block-components/image-gallery/ImageGallery";
+import Table from "../block-components/table/Table";
 
 type Props = {
   content: PageContent;
@@ -53,6 +54,8 @@ export default function PortableTextRenderer({ content }: Props) {
               props.value.images && (
                 <ImageGallery images={props.value.images} />
               ),
+            table: (props: PortableTextTypeComponentProps<TableType>) => 
+              <Table data={props.value}/>
           },
         }}
       />

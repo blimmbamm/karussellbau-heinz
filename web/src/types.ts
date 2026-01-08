@@ -16,6 +16,7 @@ export type PageContent = NonNullable<
   NonNullable<PageBySlugQueryResult["page"]>["content"]
 >;
 
+// TODO: this is only ImageGallery + _key
 export type ImageGalleryBlock = Extract<
   PageContent[number],
   { _type: "imageGallery" }
