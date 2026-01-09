@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { PageBySlugQueryResult } from "../../../src/sanity/types";
 import styles from "./PreviousNextNavigation.module.css";
-import { MoveLeft, MoveRight } from "lucide-react";
 
 type Props = {
   pageData: PageBySlugQueryResult;
@@ -29,8 +28,8 @@ export default function PreviousNextNavigation({ pageData }: Props) {
       {previous?.label && (
         <Link className={styles.link} href={previous?.slug ?? ""}>
           <div className={styles.label}>
-            <MoveLeft size={16} />
-            <span>{previous?.label}</span>
+            <span className={styles.arrow}>&larr;</span>
+            <span> {previous?.label}</span>
           </div>
         </Link>
       )}
@@ -38,8 +37,8 @@ export default function PreviousNextNavigation({ pageData }: Props) {
       {next?.label && (
         <Link className={styles.link} href={next?.slug ?? ""}>
           <div className={styles.label}>
-            <span>{next?.label}</span>
-            <MoveRight size={16} />
+            <span>{next?.label} </span>
+            <span className={styles.arrow}>&rarr;</span>
           </div>
         </Link>
       )}

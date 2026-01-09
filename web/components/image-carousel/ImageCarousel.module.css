@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin: auto;
+  width: fit-content;
 }
 
 .control {
@@ -9,6 +11,7 @@
   height: 2rem;
   cursor: pointer;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .control-disabled {
@@ -18,7 +21,6 @@
 
 .overflow-hidden-container {
   overflow: hidden;
-  flex: 1;
   user-select: none;
 }
 

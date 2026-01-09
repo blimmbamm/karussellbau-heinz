@@ -19,19 +19,12 @@
   padding-bottom: 0.75rem;
 }
 
-.label {
-  display: flex;
-  position: relative;
-  gap: 0.5rem;
-  align-items: center;
+.label:hover {
+  text-decoration: underline;
 }
 
-.label:hover::after {
-  content: "";
-  position: absolute;
-  bottom: -2;
-  left: -1;
-  right: -1;
-  height: 1px;
-  background-color: var(--font-color-darker-gray);
+.arrow {
+  font-family: monospace;
+  font-size: 1.2rem;
+  position: relative;
 }
