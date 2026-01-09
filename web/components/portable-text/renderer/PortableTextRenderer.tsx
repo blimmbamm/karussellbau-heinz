@@ -27,7 +27,7 @@ export default function PortableTextRenderer({ content }: Props) {
             ),
           },
           block: {
-            h1: ({ children }) => (
+            pageTitle: ({ children }) => (
               <div
                 style={{
                   // backgroundColor: "green",

@@ -27,6 +27,7 @@ export const pageType = defineType({
     defineField({
       name: 'isHome',
       type: 'boolean',
+      initialValue: false,
       validation: (rule) =>
         rule.custom(async (value, context) => {
           if (!value) return true
