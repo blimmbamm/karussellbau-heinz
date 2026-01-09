@@ -27,7 +27,14 @@ export const pageBySlugQuery = groq`
     ][0]{
       _id,
       title,
-      content[],
+      content[]{
+        ...,
+        _type == "video" => {
+          caption,
+          "url": file.asset->url,
+          "mimeType": file.asset->mimeType
+        }
+      },
       "slug": slug.current,
       "navContext": *[_type == "navigation"][0]{
         "dropdown": items[

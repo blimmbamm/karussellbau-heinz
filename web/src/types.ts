@@ -21,3 +21,5 @@ export type ImageGalleryBlock = Extract<
   PageContent[number],
   { _type: "imageGallery" }
 >;
+
+export type VideoBlock = Extract<PageContent[number], { _type: "video" }>;

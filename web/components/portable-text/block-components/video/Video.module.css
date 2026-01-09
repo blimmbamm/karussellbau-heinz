@@ -1,0 +1,20 @@
+.root {
+  width: 100%;
+  padding-inline: 5%;
+  margin-block: 1rem;
+}
+
+.container {
+  margin: 0;
+  text-align: center;
+}
+
+.media {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+}
+
+.caption {
+  margin-top: 0.5rem;
+}

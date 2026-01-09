@@ -28,5 +28,8 @@ export const blockContentType = defineType({
     defineArrayMember({
       type: 'table',
     }),
+    defineArrayMember({
+      type: 'video',
+    }),
   ],
 })

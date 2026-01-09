@@ -26,6 +26,8 @@ export default function TableOfContents({ pageData }: Props) {
     )
     .filter(Boolean);
 
+  if (tableOfContents?.length === 0) return null;
+
   return (
     <div className={styles.root}>
       <div className={styles.title}>Inhalt</div>
