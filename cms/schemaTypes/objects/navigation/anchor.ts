@@ -6,12 +6,12 @@ export const anchorAnnotation = defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'slug',
-      type: 'slug',
-    }),
-    defineField({
       name: 'label',
       type: 'string',
+    }),
+    defineField({
+      name: 'slug',
+      type: 'slug',
     }),
     defineField({
       name: 'hidden',
