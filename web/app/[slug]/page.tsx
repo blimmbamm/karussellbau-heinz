@@ -29,22 +29,21 @@ export default async function Page({
     slug,
   });
 
-  if (!pageData) {
-    // TODO: I think this is not the correct check
+  if (!pageData.page) {
     notFound();
   }
 
+  const { content } = pageData.page;
+
   return (
     <div>
-      {pageData.page?.showPrevNextNav && (
+      {pageData.page.showPrevNextNav && (
         <PreviousNextNavigation pageData={pageData} />
       )}
 
       <div className={styles.container}>
         <TableOfContents pageData={pageData} />
-        {pageData.page?.content && (
-          <PortableTextRenderer content={pageData.page?.content} />
-        )}
+        {content && <PortableTextRenderer content={content} />}
       </div>
     </div>
   );

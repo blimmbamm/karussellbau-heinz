@@ -21,6 +21,4 @@
   margin-right: 0.5rem;
   color: var(--main-color);
   cursor: pointer;
-
-  /* TODO: maybe compute icon size based on 10dvh */
 }

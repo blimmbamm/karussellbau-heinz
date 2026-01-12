@@ -15,7 +15,7 @@ export const revalidate = false;
 
 export const metadata: Metadata = {
   title: "Karussellbau Heinz",
-  description: "TODO",
+  description: "Karussellbau Heinz",
 };
 
 export default async function RootLayout({

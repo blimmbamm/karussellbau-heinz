@@ -1,8 +1,9 @@
 import { PortableText, PortableTextTypeComponentProps } from "next-sanity";
-import { ImageGalleryBlock, PageContent, VideoBlock } from "../../../src/types";
+import { PageContent, VideoBlock } from "../../../src/types";
 import {
   ColumnText,
   HeadlineWithDate as HeadlineWithDateType,
+  ImageGallery as ImageGalleryType,
   Table as TableType,
 } from "../../../src/sanity/types";
 import ImageGallery from "../block-components/image-gallery/ImageGallery";
@@ -49,7 +50,7 @@ export default function PortableTextRenderer({ content }: Props) {
               </div>
             ),
             imageGallery: (
-              props: PortableTextTypeComponentProps<ImageGalleryBlock>
+              props: PortableTextTypeComponentProps<ImageGalleryType>
             ) =>
               props.value.images && (
                 <ImageGallery images={props.value.images} />

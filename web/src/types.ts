@@ -8,18 +8,15 @@ export type NavItemType = NonNullable<
   NonNullable<NavigationQueryResult>["items"]
 >[number];
 
-export type NavDropdownItemType = Extract<NavItemType, { _type: "navDropdown" }>;
+export type NavDropdownItemType = Extract<
+  NavItemType,
+  { _type: "navDropdown" }
+>;
 
 export type ImageGalleryImageType = NonNullable<ImageGallery["images"]>[number];
 
 export type PageContent = NonNullable<
   NonNullable<PageBySlugQueryResult["page"]>["content"]
->;
-
-// TODO: this is only ImageGallery + _key
-export type ImageGalleryBlock = Extract<
-  PageContent[number],
-  { _type: "imageGallery" }
 >;
 
 export type VideoBlock = Extract<PageContent[number], { _type: "video" }>;
