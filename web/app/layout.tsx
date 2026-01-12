@@ -27,7 +27,7 @@ export default async function RootLayout({
     await client.fetch<NavigationQueryResult>(navigationQuery);
 
   return (
-    <html lang="en">
+    <html lang="de">
       <body
         className={`${greatVibesFont.variable} ${nunitoFont.className} ${styles.body}`}
       >

@@ -9,6 +9,7 @@ import styles from "./page.module.css";
 import PreviousNextNavigation from "../../components/navigation/sub-navigation/PreviousNextNavigation";
 import TableOfContents from "../../components/navigation/sub-navigation/TableOfContents";
 import PortableTextRenderer from "../../components/portable-text/renderer/PortableTextRenderer";
+import { Metadata } from "next";
 
 export const dynamic = "error";
 export const revalidate = false;
@@ -18,6 +19,29 @@ export async function generateStaticParams() {
   return pages.map((p) => ({ slug: p.slug }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const pageData = await client.fetch<PageBySlugQueryResult>(
+    pageBySlugQuery,
+    {
+      slug,
+    },
+    { cache: "force-cache" }
+  );
+
+  if (!pageData.page) notFound();
+
+  return {
+    title: pageData.page?.title,
+    description: "Some other description",
+  };
+}
+
 export default async function Page({
   params,
 }: {
@@ -25,9 +49,13 @@ export default async function Page({
 }) {
   const { slug } = await params;
 
-  const pageData = await client.fetch<PageBySlugQueryResult>(pageBySlugQuery, {
-    slug,
-  });
+  const pageData = await client.fetch<PageBySlugQueryResult>(
+    pageBySlugQuery,
+    {
+      slug,
+    },
+    { cache: "force-cache" }
+  );
 
   if (!pageData.page) {
     notFound();
