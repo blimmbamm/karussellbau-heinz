@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavigationQueryResult } from "../../../src/sanity/types";
 import { NavDropdownItem } from "../../../src/types";
 import Link from "next/link";
@@ -15,6 +15,12 @@ type Props = {
 export default function MobileDrawer({ open, navQueryResult, onClose }: Props) {
   const [selectedDropdown, setSelectedDropdown] =
     useState<NavDropdownItem | null>(null);
+
+  useEffect(() => {
+    if (!open) {
+      setSelectedDropdown(null);
+    }
+  }, [open]);
 
   return (
     <div className={`${styles.root} ${open ? styles.open : ""} `}>

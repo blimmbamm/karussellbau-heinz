@@ -47,7 +47,6 @@ export default function MobileNav({ navQueryResult }: Props) {
       <MobileDrawer
         open={drawerOpen}
         navQueryResult={navQueryResult}
-        key={drawerOpen.toString()}
         onClose={handleCloseDrawer}
       />
     </div>

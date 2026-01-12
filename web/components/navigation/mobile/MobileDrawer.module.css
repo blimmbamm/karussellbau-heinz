@@ -2,7 +2,8 @@
   position: fixed;
   inset: 0;
   top: var(--height-header-mobile);
-  transform: translateY(calc(-200% - var(--height-header-mobile)));
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
   background-color: var(--main-color);
   border-top: var(--thick-brown-border);
   overflow: auto;
@@ -16,7 +17,7 @@
 }
 
 .open {
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .dropdown-back-container {
