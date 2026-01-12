@@ -28,7 +28,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${greatVibesFont.variable} ${nunitoFont.className}`}>
+      <body
+        className={`${greatVibesFont.variable} ${nunitoFont.className} ${styles.body}`}
+      >
         <div className={styles.background} />
         <header className={styles.header}>
           <nav className={styles.navbar}>
@@ -37,9 +39,9 @@ export default async function RootLayout({
           </nav>
         </header>
         <div className={styles.border} />
-        <div className={styles["main-top-spacer"]} />
         <main className={styles.main}>
-          {children}
+          {/* <div className={styles["main-top-spacer"]} /> */}
+          <div className={styles["page-content"]}>{children}</div>
           <Footer />
         </main>
       </body>

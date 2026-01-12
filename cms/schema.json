@@ -521,11 +521,35 @@
                     },
                     {
                       "type": "string",
+                      "value": "pageTitle"
+                    },
+                    {
+                      "type": "string",
+                      "value": "sectionTitle"
+                    },
+                    {
+                      "type": "string",
                       "value": "h1"
                     },
                     {
                       "type": "string",
                       "value": "h2"
+                    },
+                    {
+                      "type": "string",
+                      "value": "h3"
+                    },
+                    {
+                      "type": "string",
+                      "value": "h4"
+                    },
+                    {
+                      "type": "string",
+                      "value": "h5"
+                    },
+                    {
+                      "type": "string",
+                      "value": "h6"
                     }
                   ]
                 },
@@ -859,18 +883,18 @@
             "value": "anchor"
           }
         },
+        "label": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
         "slug": {
           "type": "objectAttribute",
           "value": {
             "type": "inline",
             "name": "slug"
-          },
-          "optional": true
-        },
-        "label": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
           },
           "optional": true
         },

@@ -3,6 +3,7 @@
   top: var(--height-header);
   display: flex;
   z-index: 3;
+  background-color: var(--main-color);
 }
 
 @media (max-width: 767px) {

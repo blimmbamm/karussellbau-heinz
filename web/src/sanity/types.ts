@@ -110,7 +110,16 @@ export type BlockContent = Array<
         _type: "span";
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2";
+      style?:
+        | "normal"
+        | "pageTitle"
+        | "sectionTitle"
+        | "h1"
+        | "h2"
+        | "h3"
+        | "h4"
+        | "h5"
+        | "h6";
       listItem?: "bullet" | "number";
       markDefs?: Array<
         {
@@ -171,8 +180,8 @@ export type Slug = {
 
 export type Anchor = {
   _type: "anchor";
-  slug?: Slug;
   label?: string;
+  slug?: Slug;
   hidden?: boolean;
 };
 
@@ -325,11 +334,80 @@ export type SlugsQueryResult = Array<{
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "page" && isHome == true][0]{    _id,    title,    content  }
+// Query: *[_type == "page" && isHome == true][0]{    _id,    title,    content[]{      ...,      _type == "video" => {        caption,        "url": file.asset->url,        "mimeType": file.asset->mimeType      }    }  }
 export type HomepageQueryResult = {
   _id: string;
   title: string | null;
-  content: BlockContent | null;
+  content: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal"
+          | "pageTitle"
+          | "sectionTitle";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<
+          {
+            _key: string;
+          } & Anchor
+        >;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "columnText";
+        col1?: BlockContent;
+        col2?: BlockContent;
+      }
+    | {
+        _key: string;
+        _type: "imageGallery";
+        images?: Array<{
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          caption?: string;
+          alt?: string;
+          _type: "image";
+          _key: string;
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "table";
+        rows?: Array<
+          {
+            _key: string;
+          } & TableRow
+        >;
+      }
+    | {
+        _key: string;
+        _type: "video";
+        file?: {
+          asset?: SanityFileAssetReference;
+          media?: unknown;
+          _type: "file";
+        };
+        caption: string | null;
+        url: string | null;
+        mimeType: string | null;
+      }
+  > | null;
 } | null;
 
 // Source: ..\web\src\sanity\queries.ts
@@ -347,7 +425,16 @@ export type PageBySlugQueryResult = {
             _type: "span";
             _key: string;
           }>;
-          style?: "h1" | "h2" | "normal";
+          style?:
+            | "h1"
+            | "h2"
+            | "h3"
+            | "h4"
+            | "h5"
+            | "h6"
+            | "normal"
+            | "pageTitle"
+            | "sectionTitle";
           listItem?: "bullet" | "number";
           markDefs?: Array<
             {
@@ -447,7 +534,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current\n  }\n': SlugsQueryResult;
-    '\n  *[_type == "page" && isHome == true][0]{\n    _id,\n    title,\n    content\n  }\n': HomepageQueryResult;
+    '\n  *[_type == "page" && isHome == true][0]{\n    _id,\n    title,\n    content[]{\n      ...,\n      _type == "video" => {\n        caption,\n        "url": file.asset->url,\n        "mimeType": file.asset->mimeType\n      }\n    }\n  }\n': HomepageQueryResult;
     '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      content[]{\n        ...,\n        _type == "video" => {\n          caption,\n          "url": file.asset->url,\n          "mimeType": file.asset->mimeType\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
     '\n  *[_type == "navigation"][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          _key,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;
   }

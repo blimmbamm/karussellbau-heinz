@@ -1,7 +1,8 @@
-import Image from "next/image";
 import { client } from "../src/sanity/client";
 import { HomepageQueryResult } from "../src/sanity/types";
 import { homepageQuery } from "../src/sanity/queries";
+import styles from "./page.module.css";
+import PortableTextRenderer from "../components/portable-text/renderer/PortableTextRenderer";
 
 export const dynamic = "error";
 export const revalidate = false;
@@ -9,9 +10,11 @@ export const revalidate = false;
 export default async function Home() {
   const pageData = await client.fetch<HomepageQueryResult>(homepageQuery);
 
+  if (!pageData) return null;
+
   return (
-    <div style={{ height: "1000px" }}>
-      <p>{pageData?.title}</p>
+    <div className={styles.container}>
+      {pageData.content && <PortableTextRenderer content={pageData.content} />}
     </div>
   );
 }

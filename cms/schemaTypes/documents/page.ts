@@ -28,20 +28,6 @@ export const pageType = defineType({
       name: 'isHome',
       type: 'boolean',
       initialValue: false,
-      validation: (rule) =>
-        rule.custom(async (value, context) => {
-          if (!value) return true
-
-          const {getClient} = context
-          const client = getClient({apiVersion: '2024-01-01'})
-
-          const existingHome = await client.fetch(
-            `count(*[_type == "page" && isHome == true && _id != $id])`,
-            {id: context.document?._id},
-          )
-
-          return existingHome > 0 ? 'There can only be one homepage' : true
-        }),
     }),
 
     defineField({

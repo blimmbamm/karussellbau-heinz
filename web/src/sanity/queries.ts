@@ -14,7 +14,14 @@ export const homepageQuery = groq`
   *[_type == "page" && isHome == true][0]{
     _id,
     title,
-    content
+    content[]{
+      ...,
+      _type == "video" => {
+        caption,
+        "url": file.asset->url,
+        "mimeType": file.asset->mimeType
+      }
+    }
   }
 `;
 

@@ -1,7 +1,7 @@
 import { PortableText, PortableTextTypeComponentProps } from "next-sanity";
 import { ImageGalleryBlock, PageContent, VideoBlock } from "../../../src/types";
 import styles from "./PortableTextRenderer.module.css";
-import { ColumnText, Table as TableType, Video as VideoType } from "../../../src/sanity/types";
+import { ColumnText, Table as TableType } from "../../../src/sanity/types";
 import ImageGallery from "../block-components/image-gallery/ImageGallery";
 import Table from "../block-components/table/Table";
 import Video from "../block-components/video/Video";
@@ -55,10 +55,12 @@ export default function PortableTextRenderer({ content }: Props) {
               props.value.images && (
                 <ImageGallery images={props.value.images} />
               ),
-            table: (props: PortableTextTypeComponentProps<TableType>) => 
-              <Table data={props.value}/>,
-            video: (props: PortableTextTypeComponentProps<VideoBlock>) => 
-              <Video data={props.value}/>
+            table: (props: PortableTextTypeComponentProps<TableType>) => (
+              <Table data={props.value} />
+            ),
+            video: (props: PortableTextTypeComponentProps<VideoBlock>) => (
+              <Video data={props.value} />
+            ),
           },
         }}
       />
