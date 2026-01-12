@@ -118,19 +118,22 @@ export type BlockContent = Array<
       }>;
       style?:
         | "normal"
-        | "pageTitle"
-        | "sectionTitle"
         | "h1"
         | "h2"
         | "h3"
         | "h4"
         | "h5"
-        | "h6";
+        | "h6"
+        | "h1Centered"
+        | "centered";
       listItem?: "bullet" | "number";
       markDefs?: Array<
-        {
-          _key: string;
-        } & Anchor
+        | ({
+            _key: string;
+          } & Anchor)
+        | ({
+            _key: string;
+          } & Link)
       >;
       level?: number;
       _type: "block";
@@ -186,6 +189,11 @@ export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
+};
+
+export type Link = {
+  _type: "link";
+  href?: string;
 };
 
 export type Anchor = {
@@ -322,6 +330,7 @@ export type AllSanitySchemaTypes =
   | SanityImageCrop
   | SanityImageHotspot
   | Slug
+  | Link
   | Anchor
   | Table
   | TableRow
@@ -359,20 +368,23 @@ export type HomepageQueryResult = {
           _key: string;
         }>;
         style?:
+          | "centered"
           | "h1"
+          | "h1Centered"
           | "h2"
           | "h3"
           | "h4"
           | "h5"
           | "h6"
-          | "normal"
-          | "pageTitle"
-          | "sectionTitle";
+          | "normal";
         listItem?: "bullet" | "number";
         markDefs?: Array<
-          {
-            _key: string;
-          } & Anchor
+          | ({
+              _key: string;
+            } & Anchor)
+          | ({
+              _key: string;
+            } & Link)
         >;
         level?: number;
         _type: "block";
@@ -445,20 +457,23 @@ export type PageBySlugQueryResult = {
             _key: string;
           }>;
           style?:
+            | "centered"
             | "h1"
+            | "h1Centered"
             | "h2"
             | "h3"
             | "h4"
             | "h5"
             | "h6"
-            | "normal"
-            | "pageTitle"
-            | "sectionTitle";
+            | "normal";
           listItem?: "bullet" | "number";
           markDefs?: Array<
-            {
-              _key: string;
-            } & Anchor
+            | ({
+                _key: string;
+              } & Anchor)
+            | ({
+                _key: string;
+              } & Link)
           >;
           level?: number;
           _type: "block";

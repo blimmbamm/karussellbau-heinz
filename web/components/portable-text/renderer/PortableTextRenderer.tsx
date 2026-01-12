@@ -1,15 +1,22 @@
-import { PortableText, PortableTextTypeComponentProps } from "next-sanity";
+import {
+  PortableText,
+  PortableTextMarkComponentProps,
+  PortableTextTypeComponentProps,
+} from "next-sanity";
 import { PageContent, VideoBlock } from "../../../src/types";
 import {
+  Anchor,
   ColumnText,
   HeadlineWithDate as HeadlineWithDateType,
   ImageGallery as ImageGalleryType,
+  Link,
   Table as TableType,
 } from "../../../src/sanity/types";
 import ImageGallery from "../block-components/image-gallery/ImageGallery";
 import Table from "../block-components/table/Table";
 import Video from "../block-components/video/Video";
 import HeadlineWithDate from "../block-components/headline-with-date/HeadlineWithDate";
+import styles from "./PortableTextRenderer.module.css";
 
 type Props = {
   content: PageContent;
@@ -22,22 +29,29 @@ export default function PortableTextRenderer({ content }: Props) {
         value={content}
         components={{
           marks: {
-            anchor: ({ value, children }) => (
-              <span id={value.slug?.current}>{!value.hidden && children}</span>
+            anchor: ({
+              value,
+              children,
+            }: PortableTextMarkComponentProps<Anchor>) => (
+              <span id={value?.slug?.current}>
+                {!value?.hidden && children}
+              </span>
+            ),
+            link: ({
+              value,
+              children,
+            }: PortableTextMarkComponentProps<Link>) => (
+              <a className={styles.link} href={value?.href}>
+                {children}
+              </a>
             ),
           },
           block: {
-            pageTitle: ({ children }) => (
-              <div
-                style={{
-                  // backgroundColor: "green",
-                  fontSize: 48,
-                  textAlign: "center",
-                  // padding: 20,
-                }}
-              >
-                {children}
-              </div>
+            h1Centered: ({ children }) => (
+              <h1 className={styles.centered}>{children}</h1>
+            ),
+            centered: ({ children }) => (
+              <p className={styles.centered}>{children}</p>
             ),
           },
           types: {

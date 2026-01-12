@@ -1,7 +1,7 @@
 .container {
   padding-inline: 2.5rem;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: center;
   overflow: visible;
   gap: 2.5rem;
 }

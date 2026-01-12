@@ -42,8 +42,8 @@ export default async function Page({
       )}
 
       <div className={styles.container}>
-        <TableOfContents pageData={pageData} />
         {content && <PortableTextRenderer content={content} />}
+        <TableOfContents pageData={pageData} />
       </div>
     </div>
   );
