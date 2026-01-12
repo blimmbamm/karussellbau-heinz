@@ -5,6 +5,7 @@
   border: var(--thick-brown-border);
   padding: 0.625rem;
   transform: translateX(-50%);
+  overflow: auto;
 }
 
 .menu ul {

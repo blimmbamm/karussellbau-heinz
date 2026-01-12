@@ -14,11 +14,12 @@ export default function NavMenu({ selectedNavDropdown, onClose }: Props) {
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const menuPosition = useMemo(() => {
-    const { top, left, height, width } =
+    const { top, left, height, width, bottom } =
       selectedNavDropdown?.anchorEl?.getBoundingClientRect() || {};
     return {
       top: (top && height && top + height) || "auto",
       left: (left && width && left + width / 2) || "auto",
+      maxHeight: `calc(100dvh - ${bottom}px)`,
     };
   }, [selectedNavDropdown]);
 
@@ -49,7 +50,9 @@ export default function NavMenu({ selectedNavDropdown, onClose }: Props) {
         {selectedNavDropdown.item.items?.map((subItem) => (
           <li key={subItem._key}>
             {subItem.slug && (
-              <Link href={subItem.slug} onNavigate={onClose}
+              <Link
+                href={subItem.slug}
+                onNavigate={onClose}
                 className={styles.link}
               >
                 {subItem.label}
