@@ -4,7 +4,7 @@ import { useState } from "react";
 import { NavigationQueryResult } from "../../../src/sanity/types";
 import styles from "./DesktopNav.module.css";
 import NavItem from "./NavItem";
-import { NavDropdownItem } from "../../../src/types";
+import { NavDropdownItemType } from "../../../src/types";
 import NavMenu from "./NavMenu";
 import Link from "next/link";
 
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export type NavDropdownState = {
-  item: NavDropdownItem;
+  item: NavDropdownItemType;
   anchorEl: HTMLDivElement | null;
 } | null;
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavigationQueryResult } from "../../../src/sanity/types";
-import { NavDropdownItem } from "../../../src/types";
+import { NavDropdownItemType } from "../../../src/types";
 import Link from "next/link";
 import { MoveLeft } from "lucide-react";
 import MobileNavItem from "./MobileNavItem";
@@ -14,7 +14,7 @@ type Props = {
 
 export default function MobileDrawer({ open, navQueryResult, onClose }: Props) {
   const [selectedDropdown, setSelectedDropdown] =
-    useState<NavDropdownItem | null>(null);
+    useState<NavDropdownItemType | null>(null);
 
   useEffect(() => {
     if (!open) {

@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { NavDropdownItem, NavItemType } from "../../../src/types";
+import { NavDropdownItemType, NavItemType } from "../../../src/types";
 import { usePathname } from "next/navigation";
 import styles from "./MobileNavItem.module.css";
 
 type Props = {
   item: NavItemType;
-  onClick: (item: NonNullable<NavDropdownItem>) => void;
+  onClick: (item: NonNullable<NavDropdownItemType>) => void;
   onCloseDrawer: () => void;
 };
 
