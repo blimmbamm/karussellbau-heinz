@@ -3,8 +3,7 @@
   z-index: 3;
   background-color: var(--red-color);
   border: var(--thick-brown-border);
-  padding-block: 0.625rem;
-  padding-inline: 1.25rem;
+  padding: 0.625rem;
   transform: translateX(-50%);
 }
 
@@ -25,23 +24,6 @@
   padding-inline: 0.375rem;
 }
 
-.link::after {
-  position: absolute;
-  content: "";
-  height: 2px;
-  bottom: -3;
-  inset-inline: 0;
-  background-color: var(--main-color);
-
-  opacity: 0;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-.link:hover::after {
-  opacity: 1;
-  transform: scaleX(1);
+.link:hover {
+  text-decoration: underline;
 }
