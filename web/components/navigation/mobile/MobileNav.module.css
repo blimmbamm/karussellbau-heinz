@@ -15,8 +15,14 @@
   background-color: var(--header-color);
 }
 
-.title {
+.title-container {
   flex: 1;
+}
+
+.title {
+  display: block;
+  width: fit-content;
+  margin: auto;
   text-align: center;
   font-size: 2.5rem;
   text-decoration: none;

@@ -21,13 +21,15 @@ export default function MobileNav({ navQueryResult }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.navbar}>
-        <Link
-          href={"/"}
-          className={styles.title}
-          onNavigate={handleCloseDrawer}
-        >
-          Karussellbau Heinz
-        </Link>
+        <div className={styles["title-container"]}>
+          <Link
+            href={"/"}
+            className={styles.title}
+            onNavigate={handleCloseDrawer}
+          >
+            Karussellbau Heinz
+          </Link>
+        </div>
         {drawerOpen ? (
           <X
             className={styles["menu-toggle"]}
