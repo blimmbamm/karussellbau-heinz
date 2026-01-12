@@ -31,16 +31,3 @@
   height: 2rem;
   font-weight: bolder;
 }
-
-.drawer {
-  position: fixed;
-  inset: 0;
-  top: var(--height-header-mobile);
-  transform: translateY(calc(-200% - var(--height-header-mobile)));
-  background-color: var(--main-color);
-  border-top: var(--thick-brown-border);
-}
-
-.open {
-  transform: translateY(0);
-}

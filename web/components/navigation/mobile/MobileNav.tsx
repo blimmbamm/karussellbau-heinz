@@ -42,13 +42,12 @@ export default function MobileNav({ navQueryResult }: Props) {
           />
         )}
       </div>
-      <div className={`${styles.drawer} ${drawerOpen ? styles.open : ""} `}>
-        <MobileDrawer
-          navQueryResult={navQueryResult}
-          key={drawerOpen.toString()}
-          onClose={handleCloseDrawer}
-        />
-      </div>
+      <MobileDrawer
+        open={drawerOpen}
+        navQueryResult={navQueryResult}
+        key={drawerOpen.toString()}
+        onClose={handleCloseDrawer}
+      />
     </div>
   );
 }

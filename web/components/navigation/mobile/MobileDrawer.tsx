@@ -7,16 +7,17 @@ import MobileNavItem from "./MobileNavItem";
 import styles from "./MobileDrawer.module.css";
 
 type Props = {
+  open: boolean;
   navQueryResult: NavigationQueryResult;
   onClose: () => void;
 };
 
-export default function MobileDrawer({ navQueryResult, onClose }: Props) {
+export default function MobileDrawer({ open, navQueryResult, onClose }: Props) {
   const [selectedDropdown, setSelectedDropdown] =
     useState<NavDropdownItem | null>(null);
 
   return (
-    <div className={styles.root}>
+    <div className={`${styles.root} ${open ? styles.open : ""} `}>
       {!selectedDropdown &&
         navQueryResult?.items?.map((item) => (
           <MobileNavItem
