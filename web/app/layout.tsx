@@ -40,7 +40,6 @@ export default async function RootLayout({
         </header>
         <div className={styles.border} />
         <main className={styles.main}>
-          {/* <div className={styles["main-top-spacer"]} /> */}
           <div className={styles["page-content"]}>{children}</div>
           <Footer />
         </main>

@@ -31,6 +31,13 @@ export const pageType = defineType({
     }),
 
     defineField({
+      name: 'showPrevNextNav',
+      title: 'Show prev/next navigation?',
+      type: 'boolean',
+      initialValue: true,
+    }),
+
+    defineField({
       name: 'content',
       type: 'blockContent',
     }),

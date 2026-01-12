@@ -14,6 +14,7 @@ export const homepageQuery = groq`
   *[_type == "page" && isHome == true][0]{
     _id,
     title,
+    showPrevNextNav,
     content[]{
       ...,
       _type == "video" => {
@@ -34,6 +35,7 @@ export const pageBySlugQuery = groq`
     ][0]{
       _id,
       title,
+      showPrevNextNav,
       content[]{
         ...,
         _type == "video" => {

@@ -36,7 +36,9 @@ export default async function Page({
 
   return (
     <div className={styles.root}>
-      <PreviousNextNavigation pageData={pageData} />
+      {pageData.page?.showPrevNextNav && (
+        <PreviousNextNavigation pageData={pageData} />
+      )}
 
       <div className={styles.container}>
         <TableOfContents pageData={pageData} />
