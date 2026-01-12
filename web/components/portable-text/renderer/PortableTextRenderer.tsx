@@ -1,9 +1,14 @@
 import { PortableText, PortableTextTypeComponentProps } from "next-sanity";
 import { ImageGalleryBlock, PageContent, VideoBlock } from "../../../src/types";
-import { ColumnText, Table as TableType } from "../../../src/sanity/types";
+import {
+  ColumnText,
+  HeadlineWithDate as HeadlineWithDateType,
+  Table as TableType,
+} from "../../../src/sanity/types";
 import ImageGallery from "../block-components/image-gallery/ImageGallery";
 import Table from "../block-components/table/Table";
 import Video from "../block-components/video/Video";
+import HeadlineWithDate from "../block-components/headline-with-date/HeadlineWithDate";
 
 type Props = {
   content: PageContent;
@@ -55,6 +60,9 @@ export default function PortableTextRenderer({ content }: Props) {
             video: (props: PortableTextTypeComponentProps<VideoBlock>) => (
               <Video data={props.value} />
             ),
+            headlineWithDate: (
+              props: PortableTextTypeComponentProps<HeadlineWithDateType>
+            ) => <HeadlineWithDate data={props.value} />,
           },
         }}
       />

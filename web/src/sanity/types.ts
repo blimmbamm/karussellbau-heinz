@@ -13,6 +13,12 @@
  */
 
 // Source: schema.json
+export type HeadlineWithDate = {
+  _type: "headlineWithDate";
+  date?: string;
+  title?: string;
+};
+
 export type SanityFileAssetReference = {
   _ref: string;
   _type: "reference";
@@ -142,6 +148,9 @@ export type BlockContent = Array<
   | ({
       _key: string;
     } & Video)
+  | ({
+      _key: string;
+    } & HeadlineWithDate)
 >;
 
 export type Page = {
@@ -297,6 +306,7 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | HeadlineWithDate
   | SanityFileAssetReference
   | Video
   | PageReference
@@ -373,6 +383,12 @@ export type HomepageQueryResult = {
         _type: "columnText";
         col1?: BlockContent;
         col2?: BlockContent;
+      }
+    | {
+        _key: string;
+        _type: "headlineWithDate";
+        date?: string;
+        title?: string;
       }
     | {
         _key: string;
@@ -453,6 +469,12 @@ export type PageBySlugQueryResult = {
           _type: "columnText";
           col1?: BlockContent;
           col2?: BlockContent;
+        }
+      | {
+          _key: string;
+          _type: "headlineWithDate";
+          date?: string;
+          title?: string;
         }
       | {
           _key: string;

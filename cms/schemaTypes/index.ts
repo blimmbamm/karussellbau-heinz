@@ -1,6 +1,7 @@
 import {navigationType} from './documents/navigation'
 import {pageType} from './documents/page'
 import {blockContentType} from './objects/blockContent'
+import {headlineWithDateType} from './objects/headlineWithDate'
 import {imageGalleryType} from './objects/imageGallery'
 import {anchorAnnotation} from './objects/navigation/anchor'
 import {columnTextType} from './objects/navigation/columnText'
@@ -20,4 +21,5 @@ export const schemaTypes = [
   navDropdownType,
   navDropdownItemType,
   videoType,
+  headlineWithDateType,
 ]
