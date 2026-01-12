@@ -1,6 +1,5 @@
 import { PortableText, PortableTextTypeComponentProps } from "next-sanity";
 import { ImageGalleryBlock, PageContent, VideoBlock } from "../../../src/types";
-import styles from "./PortableTextRenderer.module.css";
 import { ColumnText, Table as TableType } from "../../../src/sanity/types";
 import ImageGallery from "../block-components/image-gallery/ImageGallery";
 import Table from "../block-components/table/Table";
@@ -18,12 +17,7 @@ export default function PortableTextRenderer({ content }: Props) {
         components={{
           marks: {
             anchor: ({ value, children }) => (
-              <span
-                id={value.slug?.current}
-                className={styles["anchor-target"]}
-              >
-                {!value.hidden && children}
-              </span>
+              <span id={value.slug?.current}>{!value.hidden && children}</span>
             ),
           },
           block: {

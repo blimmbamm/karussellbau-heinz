@@ -52,7 +52,10 @@ export default function NavMenu({ selectedNavDropdown, onClose }: Props) {
             {subItem.slug && (
               <Link
                 href={subItem.slug}
-                onNavigate={onClose}
+                onNavigate={() => {
+                  onClose();
+                  window.scrollTo({ top: 0 });
+                }}
                 className={styles.link}
               >
                 {subItem.label}
