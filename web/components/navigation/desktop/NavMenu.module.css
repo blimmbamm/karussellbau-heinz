@@ -1,4 +1,4 @@
-.menu {
+.root {
   position: absolute;
   z-index: 3;
   background-color: var(--red-color);
@@ -8,7 +8,7 @@
   overflow: auto;
 }
 
-.menu ul {
+.items {
   list-style: none;
   padding: 0;
   margin: 0;

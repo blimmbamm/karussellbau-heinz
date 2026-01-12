@@ -1,11 +1,11 @@
-.container {
+.root {
   padding-top: 1rem;
   padding-inline: 2.5rem;
   text-align: center;
 }
 
 @media (max-width: 767px) {
-  .container {
+  .root {
     padding-inline: 1rem;
   }
 }

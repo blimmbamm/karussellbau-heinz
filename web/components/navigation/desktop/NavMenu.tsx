@@ -45,8 +45,8 @@ export default function NavMenu({ selectedNavDropdown, onClose }: Props) {
   }, [selectedNavDropdown]);
 
   return (
-    <div className={styles.menu} style={{ ...menuPosition }} ref={menuRef}>
-      <ul>
+    <div className={styles.root} style={{ ...menuPosition }} ref={menuRef}>
+      <ul className={styles.items}>
         {selectedNavDropdown.item.items?.map((subItem) => (
           <li key={subItem._key}>
             {subItem.slug && (

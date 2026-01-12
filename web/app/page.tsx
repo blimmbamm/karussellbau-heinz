@@ -13,7 +13,7 @@ export default async function Home() {
   if (!pageData) return null;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.root}>
       {pageData.content && <PortableTextRenderer content={pageData.content} />}
     </div>
   );

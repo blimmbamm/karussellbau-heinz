@@ -35,7 +35,7 @@ export default async function Page({
   }
 
   return (
-    <div className={styles.root}>
+    <div>
       {pageData.page?.showPrevNextNav && (
         <PreviousNextNavigation pageData={pageData} />
       )}

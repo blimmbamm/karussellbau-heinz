@@ -30,7 +30,6 @@
 }
 
 .main {
-  /* display: flow-root; */
   display: flex;
   flex-direction: column;
   max-width: var(--max-width);
