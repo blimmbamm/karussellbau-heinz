@@ -19,8 +19,8 @@ export default function MobileNav({ navQueryResult }: Props) {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.navbar}>
+    <div className={styles.root}>
+      <div className={styles.menu}>
         <div className={styles["title-container"]}>
           <Link
             href={"/"}

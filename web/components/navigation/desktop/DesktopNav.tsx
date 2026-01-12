@@ -36,11 +36,11 @@ export default function DesktopNav({ navQueryResult }: Props) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.root}>
       <Link href={"/"} className={styles.title}>
         Karussellbau Heinz
       </Link>
-      <div className={styles.navbar}>
+      <div className={styles.menu}>
         {navQueryResult?.items?.map((item) => (
           <NavItem
             key={item._key}
