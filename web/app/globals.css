@@ -13,7 +13,6 @@
 
   --height-header: 7.25rem;
   --height-header-mobile: 5.75rem;
-
 }
 
 * {
@@ -23,6 +22,12 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--height-header) + 3rem);
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: calc(var(--height-header-mobile) + 3rem);
+  }
 }
 
 body {
