@@ -15,7 +15,11 @@ export const dynamic = "error";
 export const revalidate = false;
 
 export async function generateStaticParams() {
-  const pages = await client.fetch<SlugsQueryResult>(slugsQuery);
+  const pages = await client.fetch<SlugsQueryResult>(
+    slugsQuery,
+    {},
+    { cache: "force-cache" }
+  );
   return pages.map((p) => ({ slug: p.slug }));
 }
 

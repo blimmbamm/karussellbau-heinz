@@ -8,7 +8,11 @@ export const dynamic = "error";
 export const revalidate = false;
 
 export default async function Home() {
-  const pageData = await client.fetch<HomepageQueryResult>(homepageQuery);
+  const pageData = await client.fetch<HomepageQueryResult>(
+    homepageQuery,
+    {},
+    { cache: "force-cache" }
+  );
 
   if (!pageData) return null;
 

@@ -23,8 +23,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const navigationQueryResult =
-    await client.fetch<NavigationQueryResult>(navigationQuery);
+  const navigationQueryResult = await client.fetch<NavigationQueryResult>(
+    navigationQuery,
+    {},
+    { cache: "force-cache" }
+  );
 
   return (
     <html lang="de">
