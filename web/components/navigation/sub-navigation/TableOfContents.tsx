@@ -1,4 +1,4 @@
-import { PageBySlugQueryResult } from "../../../src/sanity/types";
+import { Anchor, PageBySlugQueryResult } from "../../../src/sanity/types";
 import styles from "./TableOfContents.module.css";
 
 type Props = {
@@ -13,8 +13,10 @@ export default function TableOfContents({ pageData }: Props) {
         (child) =>
           child.marks?.map((mark: string) => {
             const def = block.markDefs?.find(
-              (d) => d._key === mark && d._type === "anchor"
+              (d): d is Anchor & { _key: string } =>
+                d._key === mark && d._type === "anchor"
             );
+
             if (!def?.slug?.current) return null;
 
             return {
