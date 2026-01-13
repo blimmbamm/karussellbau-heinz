@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { client } from "../src/sanity/client";
-import { navigationQuery } from "../src/sanity/queries";
-import { NavigationQueryResult } from "../src/sanity/types";
+import { metadataQuery, navigationQuery } from "../src/sanity/queries";
+import {
+  MetadataQueryResult,
+  NavigationQueryResult,
+} from "../src/sanity/types";
 import Footer from "../components/footer/Footer";
 import DesktopNav from "../components/navigation/desktop/DesktopNav";
 import MobileNav from "../components/navigation/mobile/MobileNav";
@@ -9,14 +12,26 @@ import { greatVibesFont, nunitoFont } from "../styles/font";
 
 import "./globals.css";
 import styles from "./layout.module.css";
+import { SITE_URL } from "../src/environment";
 
 export const dynamic = "error";
 export const revalidate = false;
 
-export const metadata: Metadata = {
-  title: "Karussellbau Heinz",
-  description: "Karussellbau Heinz",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const metadata = await client.fetch<MetadataQueryResult>(
+    metadataQuery,
+    {},
+    { cache: "force-cache" }
+  );
+
+  return {
+    title: metadata?.title,
+    description: metadata?.description,
+    alternates: {
+      canonical: SITE_URL,
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -30,7 +45,7 @@ export default async function RootLayout({
   );
 
   return (
-    <html lang="de">
+    <html lang="de" data-scroll-behavior="smooth">
       <body
         className={`${greatVibesFont.variable} ${nunitoFont.className} ${styles.body}`}
       >

@@ -10,6 +10,7 @@ import PreviousNextNavigation from "../../components/navigation/sub-navigation/P
 import TableOfContents from "../../components/navigation/sub-navigation/TableOfContents";
 import PortableTextRenderer from "../../components/portable-text/renderer/PortableTextRenderer";
 import { Metadata } from "next";
+import { SITE_URL } from "../../src/environment";
 
 export const dynamic = "error";
 export const revalidate = false;
@@ -41,8 +42,11 @@ export async function generateMetadata({
   if (!pageData.page) notFound();
 
   return {
-    title: pageData.page?.title,
-    description: "Some other description",
+    title: pageData.page.title,
+    description: pageData.page.description,
+    alternates: {
+      canonical: `${SITE_URL}/${pageData.page.slug}`,
+    },
   };
 }
 

@@ -1,5 +1,9 @@
 import { groq } from "next-sanity";
 
+export const metadataQuery = groq`
+  *[_type == "metadata"][0]
+`;
+
 export const slugsQuery = groq`
   *[
     _type == "page" &&
@@ -35,6 +39,8 @@ export const pageBySlugQuery = groq`
     ][0]{
       _id,
       title,
+      description,
+      slug,      
       showPrevNextNav,
       content[]{
         ...,

@@ -1,3 +1,4 @@
+import {metadataType} from './documents/metadata'
 import {navigationType} from './documents/navigation'
 import {pageType} from './documents/page'
 import {blockContentType} from './objects/blockContent'
@@ -24,4 +25,5 @@ export const schemaTypes = [
   navDropdownItemType,
   videoType,
   headlineWithDateType,
+  metadataType,
 ]

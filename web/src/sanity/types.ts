@@ -13,6 +13,16 @@
  */
 
 // Source: schema.json
+export type Metadata = {
+  _id: string;
+  _type: "metadata";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+};
+
 export type HeadlineWithDate = {
   _type: "headlineWithDate";
   date?: string;
@@ -163,6 +173,7 @@ export type Page = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  description?: string;
   slug?: Slug;
   isHome?: boolean;
   showPrevNextNav?: boolean;
@@ -314,6 +325,7 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | Metadata
   | HeadlineWithDate
   | SanityFileAssetReference
   | Video
@@ -344,6 +356,19 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+// Source: ..\web\src\sanity\queries.ts
+// Variable: metadataQuery
+// Query: *[_type == "metadata"][0]
+export type MetadataQueryResult = {
+  _id: string;
+  _type: "metadata";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+} | null;
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: slugsQuery
@@ -442,11 +467,13 @@ export type HomepageQueryResult = {
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: pageBySlugQuery
-// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true    ][0]{      _id,      title,      showPrevNextNav,      content[]{        ...,        _type == "video" => {          caption,          "url": file.asset->url,          "mimeType": file.asset->mimeType        }      },      "slug": slug.current,      "navContext": *[_type == "navigation"][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0] {          ...,          items[]{            ...,            "slug": page->slug.current          }        }      }    }  }
+// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true    ][0]{      _id,      title,      description,      slug,            showPrevNextNav,      content[]{        ...,        _type == "video" => {          caption,          "url": file.asset->url,          "mimeType": file.asset->mimeType        }      },      "slug": slug.current,      "navContext": *[_type == "navigation"][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0] {          ...,          items[]{            ...,            "slug": page->slug.current          }        }      }    }  }
 export type PageBySlugQueryResult = {
   page: {
     _id: string;
     title: string | null;
+    description: string | null;
+    slug: string | null;
     showPrevNextNav: boolean | null;
     content: Array<
       | {
@@ -527,7 +554,6 @@ export type PageBySlugQueryResult = {
           mimeType: string | null;
         }
     > | null;
-    slug: string | null;
     navContext: {
       dropdown: {
         _key: string;
@@ -573,9 +599,10 @@ export type NavigationQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '\n  *[_type == "metadata"][0]\n': MetadataQueryResult;
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current\n  }\n': SlugsQueryResult;
     '\n  *[_type == "page" && isHome == true][0]{\n    _id,\n    title,\n    showPrevNextNav,\n    content[]{\n      ...,\n      _type == "video" => {\n        caption,\n        "url": file.asset->url,\n        "mimeType": file.asset->mimeType\n      }\n    }\n  }\n': HomepageQueryResult;
-    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      showPrevNextNav,\n      content[]{\n        ...,\n        _type == "video" => {\n          caption,\n          "url": file.asset->url,\n          "mimeType": file.asset->mimeType\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
+    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true\n    ][0]{\n      _id,\n      title,\n      description,\n      slug,      \n      showPrevNextNav,\n      content[]{\n        ...,\n        _type == "video" => {\n          caption,\n          "url": file.asset->url,\n          "mimeType": file.asset->mimeType\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation"][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
     '\n  *[_type == "navigation"][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          _key,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;
   }
 }

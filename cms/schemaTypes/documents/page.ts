@@ -12,6 +12,12 @@ export const pageType = defineType({
     }),
 
     defineField({
+      name: 'description',
+      title: 'Description (for SEO)',
+      type: 'text',
+    }),
+
+    defineField({
       name: 'slug',
       type: 'slug',
       options: {source: 'title'},
