@@ -18,6 +18,20 @@ export const pageType = defineType({
     }),
 
     defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+      options: {
+        list: [
+          {title: 'German', value: 'de'},
+          {title: 'English', value: 'en'},
+        ],
+        layout: 'radio',
+      },
+    }),
+
+    defineField({
       name: 'slug',
       type: 'slug',
       options: {source: 'title'},

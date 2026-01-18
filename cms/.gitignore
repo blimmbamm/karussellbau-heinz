@@ -29,3 +29,5 @@
 *.local
 
 .env
+
+*.tar.gz
