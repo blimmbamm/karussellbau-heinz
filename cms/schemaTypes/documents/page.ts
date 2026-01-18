@@ -10,6 +10,12 @@ export const pageType = defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+    
+    defineField({
+      name: 'seoTitle',
+      title: 'SEO & page title',
+      type: 'string',
+    }),
 
     defineField({
       name: 'description',
