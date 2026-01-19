@@ -53,7 +53,7 @@ export const pageBySlugQuery = groq`
         }
       },
       "slug": slug.current,
-      "navContext": *[_type == "navigation"][0]{
+      "navContext": *[_type == "navigation" && language == $lang][0]{
         "dropdown": items[
           _type == "navDropdown" && 
           (count(items[page._ref == ^.^.^._id]) > 0)
