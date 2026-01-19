@@ -54,6 +54,10 @@ export async function generateMetadata({
     description: pageData.page.description,
     alternates: {
       canonical: `${SITE_URL}/${lang}/${pageData.page.slug}`,
+      languages: {
+        de: `${SITE_URL}/de/${pageData.page.slug}`,
+        en: `${SITE_URL}/en/${pageData.page.slug}`,
+      },
     },
   };
 }

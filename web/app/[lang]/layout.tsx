@@ -36,6 +36,10 @@ export async function generateMetadata({
     description: metadata?.description,
     alternates: {
       canonical: `${SITE_URL}/${lang}`,
+      languages: {
+        de: `${SITE_URL}/de`,
+        en: `${SITE_URL}/en`,
+      },
     },
   };
 }
