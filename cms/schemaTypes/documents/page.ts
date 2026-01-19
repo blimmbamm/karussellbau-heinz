@@ -10,7 +10,7 @@ export const pageType = defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
-    
+
     defineField({
       name: 'seoTitle',
       title: 'SEO & page title',
@@ -40,7 +40,29 @@ export const pageType = defineType({
     defineField({
       name: 'slug',
       type: 'slug',
-      options: {source: 'title'},
+      options: {
+        source: 'title',
+        isUnique: (value, context) => {
+          const {document, getClient} = context
+          const client = getClient({apiVersion: '2026-01-18'})
+
+          if (!document?.language) return true
+
+          return client.fetch(
+            `count(*[
+          _type == "page" &&
+          slug.current == $slug &&
+          language == $language &&
+          _id != $id
+        ]) == 0`,
+            {
+              slug: value,
+              language: document.language,
+              id: document._id.replace(/^drafts\./, ''),
+            },
+          )
+        },
+      },
       validation: (rule) =>
         rule.custom((slug, context) => {
           if (context.document?.isHome && slug?.current) {
