@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 
 export const metadataQuery = groq`
-  *[_type == "metadata"][0]
+  *[_type == "metadata" && language == $lang][0]
 `;
 
 export const slugsQuery = groq`

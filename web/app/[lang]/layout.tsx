@@ -27,7 +27,7 @@ export async function generateMetadata({
 
   const metadata = await client.fetch<MetadataQueryResult>(
     metadataQuery,
-    {},
+    { lang },
     { cache: "force-cache" },
   );
 

@@ -10,6 +10,7 @@ export const metadataType = defineType({
       title: 'Title',
       type: 'string',
     }),
+    
     defineField({
       name: 'description',
       title: 'Description',
@@ -17,6 +18,20 @@ export const metadataType = defineType({
       validation: (Rule) =>
         Rule.max(160).warning('Meta descriptions should be under 160 characters'),
       description: 'Recommended: 140–160 characters',
+    }),
+
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+      options: {
+        list: [
+          {title: 'German', value: 'de'},
+          {title: 'English', value: 'en'},
+        ],
+        layout: 'radio',
+      },
     }),
   ],
 })
