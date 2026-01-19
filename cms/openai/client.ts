@@ -1,5 +1,5 @@
 import OpenAI from 'openai'
 
-export default new OpenAI({
+export const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })

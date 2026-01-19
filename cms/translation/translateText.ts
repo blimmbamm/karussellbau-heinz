@@ -1,4 +1,4 @@
-import OpenAI from 'openai'
+import { openai } from "../openai/client"
 
 const SYSTEM_PROMPT = `
 You are a translation engine.
@@ -13,8 +13,6 @@ Rules:
 - If the input is unclear, return it unchanged.
 - Preserve numbers, units, and identifiers.
 `
-
-const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY})
 
 export default async function translateText(text: string) {
   if (!text) return ''
