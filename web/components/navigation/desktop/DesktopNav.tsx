@@ -7,6 +7,7 @@ import NavItem from "./NavItem";
 import { NavDropdownItemType } from "../../../src/types";
 import NavMenu from "./NavMenu";
 import Link from "next/link";
+import LanguageSwitcher from "../language-switcher/LanguageSwitcher";
 
 type Props = {
   navQueryResult: NavigationQueryResult;
@@ -50,6 +51,7 @@ export default function DesktopNav({ navQueryResult, lang }: Props) {
             lang={lang}
           />
         ))}
+        <LanguageSwitcher lang={lang} hoverAnimation languageAbbreviation />
         {selectedNavDropdown && (
           <NavMenu
             selectedNavDropdown={selectedNavDropdown}

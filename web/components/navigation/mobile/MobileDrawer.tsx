@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MoveLeft } from "lucide-react";
 import MobileNavItem from "./MobileNavItem";
 import styles from "./MobileDrawer.module.css";
+import LanguageSwitcher from "../language-switcher/LanguageSwitcher";
 
 type Props = {
   open: boolean;
@@ -30,16 +31,20 @@ export default function MobileDrawer({
 
   return (
     <div className={`${styles.root} ${open ? styles.open : ""} `}>
-      {!selectedDropdown &&
-        navQueryResult?.items?.map((item) => (
-          <MobileNavItem
-            key={item._key}
-            item={item}
-            onClick={(item) => setSelectedDropdown(item)}
-            onCloseDrawer={onClose}
-            lang={lang}
-          />
-        ))}
+      {!selectedDropdown && (
+        <>
+          {navQueryResult?.items?.map((item) => (
+            <MobileNavItem
+              key={item._key}
+              item={item}
+              onClick={(item) => setSelectedDropdown(item)}
+              onCloseDrawer={onClose}
+              lang={lang}
+            />
+          ))}
+          <LanguageSwitcher lang={lang}/>
+        </>
+      )}
       {selectedDropdown && (
         <>
           <div className={styles["dropdown-back-container"]}>
