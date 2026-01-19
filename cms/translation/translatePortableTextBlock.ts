@@ -11,18 +11,29 @@ export default async function translatePortableTextBlock(block: any) {
   return {
     ...block,
     children: await Promise.all(
-      (block.children || []).map(async (child: any) => ({
-        ...child,
-        text: await translateText(child.text),
-      })),
+      (block.children || []).map(async (child: any) => {
+        if (!child.text) return child
+
+        // preserve leading/trailing whitespace
+        const leadingSpace = child.text.match(/^(\s*)/)?.[0] || ''
+        const trailingSpace = child.text.match(/(\s*)$/)?.[0] || ''
+
+        const trimmedText = child.text.trim()
+        const translated = trimmedText ? await translateText(trimmedText) : ''
+
+        return {
+          ...child,
+          text: `${leadingSpace}${translated}${trailingSpace}`,
+        }
+      }),
     ),
     markDefs: await Promise.all(
       (block.markDefs || []).map(async (mark: any) => {
         if (mark._type === 'anchor' && mark.label) {
           return {
             ...mark,
-            // label: await translateText(mark.label),
-            label: ANCHOR_LABEL_RENAMES[mark.label],
+            // map label if exists in your rename map
+            label: ANCHOR_LABEL_RENAMES[mark.label] ?? mark.label,
           }
         }
         return mark
