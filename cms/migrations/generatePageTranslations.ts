@@ -6,6 +6,7 @@ export default defineMigration({
   documentTypes: ['page'],
   async *migrate(documents, context) {
     for await (const doc of documents()) {
+      console.log(process.env.TRANSLATE_MODE)
       const translatedId = doc._id + '-en'
 
       const translationExists = Boolean(
@@ -18,11 +19,11 @@ export default defineMigration({
       }
 
       // Limit to one page temporary for testing:
-      if (doc._id !== '8ae92060-3686-4afa-bc4e-19aa30338a7b') continue
+      // if (doc._id !== '8ae92060-3686-4afa-bc4e-19aa30338a7b') continue
       if (doc._type !== 'page') continue
       if (doc.language === 'en') continue // skip already translated
 
-      const translatedPage = await translatePage(doc)
+      const translatedPage = process.env.TRANSLATE_MODE === 'mock' ? doc : await translatePage(doc)
 
       const newDoc = {
         ...translatedPage,
