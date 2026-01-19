@@ -1,9 +1,5 @@
 import {createClient} from '@sanity/client'
 import translatePage from './translatePage'
-// import OpenAI from 'openai'
-// import dotenv from 'dotenv'
-
-// dotenv.config() // loads .env.local for API keys
 
 // -------------------------
 // Sanity client
@@ -17,25 +13,6 @@ const sanityClient = createClient({
 })
 
 // -------------------------
-// OpenAI client
-// -------------------------
-// const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-
-// async function translateText(text: string) {
-//   if (!text) return ''
-//   const response = await openai.chat.completions.create({
-//     model: 'gpt-4o-mini', // cheap & good for translation
-//     messages: [
-//       { role: 'system', content: 'Translate text from German to English.' },
-//       { role: 'user', content: text },
-//     ],
-//     temperature: 0,
-//   })
-
-//   return response.choices[0].message?.content ?? text
-// }
-
-// -------------------------
 // Fetch one page
 // -------------------------
 async function getSinglePage() {
@@ -45,28 +22,6 @@ async function getSinglePage() {
   if (!page) throw new Error('No German page found')
   return page
 }
-
-// -------------------------
-// Optional: translate content blocks
-// -------------------------
-// async function translateContentBlocks(blocks: any[]) {
-//   return await Promise.all(
-//     blocks.map(async (block: any) => {
-//       if (block._type === 'block' && block.children) {
-//         return {
-//           ...block,
-//           children: await Promise.all(
-//             block.children.map(async (child: any) => ({
-//               ...child,
-//               text: await translateText(child.text),
-//             }))
-//           ),
-//         }
-//       }
-//       return block
-//     })
-//   )
-// }
 
 // -------------------------
 // Main test function
@@ -85,9 +40,7 @@ async function testTranslation() {
       ...translatedPage,
       _id: page._id + '-en',
       language: 'en',
-      // title: translatedTitle,
-      // description: translatedDescription,
-      // content: translatedContent,
+      title: `${translatedPage.seoTitle} (EN)`
     }
     await sanityClient.create(newDoc)
     console.log('\nTranslated page created in Sanity with _id:', newDoc._id)
