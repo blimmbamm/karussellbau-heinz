@@ -50,7 +50,7 @@ export async function generateMetadata({
   if (!pageData.page) notFound();
 
   return {
-    title: pageData.page.title,
+    title: pageData.page.seoTitle,
     description: pageData.page.description,
     alternates: {
       canonical: `${SITE_URL}/${lang}/${pageData.page.slug}`,

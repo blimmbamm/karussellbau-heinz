@@ -40,6 +40,7 @@ export const pageBySlugQuery = groq`
     ][0]{
       _id,
       title,
+      seoTitle,
       description,
       slug,      
       showPrevNextNav,

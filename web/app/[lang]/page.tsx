@@ -10,7 +10,7 @@ export const dynamic = "error";
 export const revalidate = false;
 
 export function generateStaticParams() {
-  return SUPPORTED_LANGS;
+  return SUPPORTED_LANGS.map((lang) => ({ lang }));
 }
 
 export default async function Home({
