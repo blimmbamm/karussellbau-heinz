@@ -1,24 +1,23 @@
-import { client } from "../src/sanity/client";
-import { HomepageQueryResult } from "../src/sanity/types";
-import { homepageQuery } from "../src/sanity/queries";
-import styles from "./page.module.css";
-import PortableTextRenderer from "../components/portable-text/renderer/PortableTextRenderer";
+import { headers as nextHeaders } from "next/headers";
+import { redirect } from "next/navigation";
+import { DEFAULT_LANG, SUPPORTED_LANGS } from "../i18n/i18n";
 
-export const dynamic = "error";
-export const revalidate = false;
+async function getPreferredLang() {
+  const headers = await nextHeaders();
+  const acceptLanguage = headers.get("accept-language");
 
-export default async function Home() {
-  const pageData = await client.fetch<HomepageQueryResult>(
-    homepageQuery,
-    {},
-    { cache: "force-cache" }
-  );
+  if (!acceptLanguage) return DEFAULT_LANG;
 
-  if (!pageData) return null;
+  for (const lang of SUPPORTED_LANGS) {
+    if (acceptLanguage.toLowerCase().startsWith(lang)) {
+      return lang;
+    }
+  }
 
-  return (
-    <div className={styles.root}>
-      {pageData.content && <PortableTextRenderer content={pageData.content} />}
-    </div>
-  );
+  return DEFAULT_LANG;
+}
+
+export default async function RootPage() {
+  const lang = await getPreferredLang();
+  redirect(`/${lang}`);
 }

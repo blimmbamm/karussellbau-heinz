@@ -10,6 +10,7 @@ import Link from "next/link";
 
 type Props = {
   navQueryResult: NavigationQueryResult;
+  lang: string;
 };
 
 export type NavDropdownState = {
@@ -17,7 +18,7 @@ export type NavDropdownState = {
   anchorEl: HTMLDivElement | null;
 } | null;
 
-export default function DesktopNav({ navQueryResult }: Props) {
+export default function DesktopNav({ navQueryResult, lang }: Props) {
   const [selectedNavDropdown, setSelectedNavDropdown] =
     useState<NavDropdownState>(null);
 
@@ -37,7 +38,7 @@ export default function DesktopNav({ navQueryResult }: Props) {
 
   return (
     <div className={styles.root}>
-      <Link href={"/"} className={styles.title}>
+      <Link href={`/${lang}`} className={styles.title}>
         Karussellbau Heinz
       </Link>
       <div className={styles.menu}>
@@ -46,12 +47,14 @@ export default function DesktopNav({ navQueryResult }: Props) {
             key={item._key}
             item={item}
             onClick={handleSelectNavDropdown}
+            lang={lang}
           />
         ))}
         {selectedNavDropdown && (
           <NavMenu
             selectedNavDropdown={selectedNavDropdown}
             onClose={() => setSelectedNavDropdown(null)}
+            lang={lang}
           />
         )}
       </div>

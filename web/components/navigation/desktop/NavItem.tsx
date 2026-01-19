@@ -10,9 +10,10 @@ import { usePathname } from "next/navigation";
 type Props = {
   item: NavItemType;
   onClick: ({ item, anchorEl }: NonNullable<NavDropdownState>) => void;
+  lang: string;
 };
 
-export default function NavItem({ item, onClick }: Props) {
+export default function NavItem({ item, onClick, lang }: Props) {
   const navItemRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
@@ -20,9 +21,11 @@ export default function NavItem({ item, onClick }: Props) {
   function activeClassName() {
     switch (item._type) {
       case "navLink":
-        return pathname === `/${item.slug}` ? styles.active : "";
+        return pathname === `/${lang}/${item.slug}` ? styles.active : "";
       case "navDropdown":
-        return item.items?.map(({ slug }) => `/${slug}`).includes(pathname)
+        return item.items
+          ?.map(({ slug }) => `/${lang}/${slug}`)
+          .includes(pathname)
           ? styles.active
           : "";
     }
@@ -32,7 +35,7 @@ export default function NavItem({ item, onClick }: Props) {
     <>
       {item._type === "navLink" && item.slug && (
         <Link
-          href={item.slug}
+          href={`/${lang}/${item.slug}`}
           className={`${styles.root} ${styles["nav-link"]} ${activeClassName()}`}
         >
           {item.label}

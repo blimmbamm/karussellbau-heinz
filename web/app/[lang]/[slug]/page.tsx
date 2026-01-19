@@ -1,16 +1,16 @@
 import { notFound } from "next/navigation";
-import { client } from "../../src/sanity/client";
-import { pageBySlugQuery, slugsQuery } from "../../src/sanity/queries";
+import { client } from "../../../src/sanity/client";
+import { pageBySlugQuery, slugsQuery } from "../../../src/sanity/queries";
 import {
   PageBySlugQueryResult,
   SlugsQueryResult,
-} from "../../src/sanity/types";
+} from "../../../src/sanity/types";
 import styles from "./page.module.css";
-import PreviousNextNavigation from "../../components/navigation/sub-navigation/PreviousNextNavigation";
-import TableOfContents from "../../components/navigation/sub-navigation/TableOfContents";
-import PortableTextRenderer from "../../components/portable-text/renderer/PortableTextRenderer";
+import PreviousNextNavigation from "../../../components/navigation/sub-navigation/PreviousNextNavigation";
+import TableOfContents from "../../../components/navigation/sub-navigation/TableOfContents";
+import PortableTextRenderer from "../../../components/portable-text/renderer/PortableTextRenderer";
 import { Metadata } from "next";
-import { SITE_URL } from "../../src/environment";
+import { SITE_URL } from "../../../src/environment";
 
 export const dynamic = "error";
 export const revalidate = false;
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   const pages = await client.fetch<SlugsQueryResult>(
     slugsQuery,
     {},
-    { cache: "force-cache" }
+    { cache: "force-cache" },
   );
   return pages.map((p) => ({ slug: p.slug }));
 }
@@ -27,16 +27,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
 
   const pageData = await client.fetch<PageBySlugQueryResult>(
     pageBySlugQuery,
     {
+      lang,
       slug,
     },
-    { cache: "force-cache" }
+    { cache: "force-cache" },
   );
 
   if (!pageData.page) notFound();
@@ -45,7 +46,7 @@ export async function generateMetadata({
     title: pageData.page.title,
     description: pageData.page.description,
     alternates: {
-      canonical: `${SITE_URL}/${pageData.page.slug}`,
+      canonical: `${SITE_URL}/${lang}/${pageData.page.slug}`,
     },
   };
 }
@@ -53,16 +54,17 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { lang, slug } = await params;
 
   const pageData = await client.fetch<PageBySlugQueryResult>(
     pageBySlugQuery,
     {
+      lang,
       slug,
     },
-    { cache: "force-cache" }
+    { cache: "force-cache" },
   );
 
   if (!pageData.page) {
@@ -79,7 +81,7 @@ export default async function Page({
 
       <div className={styles.container}>
         {content && <PortableTextRenderer content={content} />}
-        <TableOfContents pageData={pageData} />
+        <TableOfContents pageData={pageData} lang={lang} />
       </div>
     </div>
   );

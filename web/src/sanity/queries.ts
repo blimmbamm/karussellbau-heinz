@@ -15,7 +15,7 @@ export const slugsQuery = groq`
 `;
 
 export const homepageQuery = groq`
-  *[_type == "page" && isHome == true][0]{
+  *[_type == "page" && isHome == true && language == $lang][0]{
     _id,
     title,
     showPrevNextNav,
@@ -35,7 +35,8 @@ export const pageBySlugQuery = groq`
     "page": *[
       _type == "page" &&
       slug.current == $slug && 
-      isHome != true
+      isHome != true &&
+      language == $lang
     ][0]{
       _id,
       title,
@@ -68,7 +69,7 @@ export const pageBySlugQuery = groq`
 `;
 
 export const navigationQuery = groq`
-  *[_type == "navigation"][0]{
+  *[_type == "navigation" && language == $lang][0]{
     items[]{
       _type,
       _key,

@@ -8,9 +8,10 @@ import { NavDropdownState } from "./DesktopNav";
 type Props = {
   selectedNavDropdown: NonNullable<NavDropdownState>;
   onClose: () => void;
+  lang: string;
 };
 
-export default function NavMenu({ selectedNavDropdown, onClose }: Props) {
+export default function NavMenu({ selectedNavDropdown, onClose, lang }: Props) {
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const menuPosition = useMemo(() => {
@@ -51,7 +52,7 @@ export default function NavMenu({ selectedNavDropdown, onClose }: Props) {
           <li key={subItem._key}>
             {subItem.slug && (
               <Link
-                href={subItem.slug}
+                href={`/${lang}/${subItem.slug}`}
                 onNavigate={() => {
                   onClose();
                   window.scrollTo({ top: 0 });

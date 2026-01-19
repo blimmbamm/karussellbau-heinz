@@ -9,17 +9,25 @@ type Props = {
   item: NavItemType;
   onClick: (item: NonNullable<NavDropdownItemType>) => void;
   onCloseDrawer: () => void;
+  lang: string;
 };
 
-export default function MobileNavItem({ item, onClick, onCloseDrawer }: Props) {
+export default function MobileNavItem({
+  item,
+  onClick,
+  onCloseDrawer,
+  lang,
+}: Props) {
   const pathname = usePathname();
 
   function activeClassName() {
     switch (item._type) {
       case "navLink":
-        return pathname === `/${item.slug}` ? styles.active : "";
+        return pathname === `/${lang}/${item.slug}` ? styles.active : "";
       case "navDropdown":
-        return item.items?.map(({ slug }) => `/${slug}`).includes(pathname)
+        return item.items
+          ?.map(({ slug }) => `/${lang}/${slug}`)
+          .includes(pathname)
           ? styles.active
           : "";
     }
@@ -29,7 +37,7 @@ export default function MobileNavItem({ item, onClick, onCloseDrawer }: Props) {
     <>
       {item._type === "navLink" && item.slug && (
         <Link
-          href={item.slug}
+          href={`/${lang}/${item.slug}`}
           className={`${styles.root} ${styles["nav-link"]} ${activeClassName()}`}
           onNavigate={onCloseDrawer}
         >

@@ -10,9 +10,15 @@ type Props = {
   open: boolean;
   navQueryResult: NavigationQueryResult;
   onClose: () => void;
+  lang: string;
 };
 
-export default function MobileDrawer({ open, navQueryResult, onClose }: Props) {
+export default function MobileDrawer({
+  open,
+  navQueryResult,
+  onClose,
+  lang,
+}: Props) {
   const [selectedDropdown, setSelectedDropdown] =
     useState<NavDropdownItemType | null>(null);
 
@@ -31,6 +37,7 @@ export default function MobileDrawer({ open, navQueryResult, onClose }: Props) {
             item={item}
             onClick={(item) => setSelectedDropdown(item)}
             onCloseDrawer={onClose}
+            lang={lang}
           />
         ))}
       {selectedDropdown && (
@@ -44,13 +51,13 @@ export default function MobileDrawer({ open, navQueryResult, onClose }: Props) {
               item.slug && (
                 <Link
                   key={item._key}
-                  href={item.slug}
+                  href={`/${lang}/${item.slug}`}
                   className={styles.link}
                   onNavigate={onClose}
                 >
                   {item.label}
                 </Link>
-              )
+              ),
           )}
         </>
       )}

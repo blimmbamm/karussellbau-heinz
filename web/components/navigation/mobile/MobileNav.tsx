@@ -9,9 +9,10 @@ import Link from "next/link";
 
 type Props = {
   navQueryResult: NavigationQueryResult;
+  lang: string;
 };
 
-export default function MobileNav({ navQueryResult }: Props) {
+export default function MobileNav({ navQueryResult, lang }: Props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   function handleCloseDrawer() {
@@ -23,7 +24,7 @@ export default function MobileNav({ navQueryResult }: Props) {
       <div className={styles.menu}>
         <div className={styles["title-container"]}>
           <Link
-            href={"/"}
+            href={`/${lang}`}
             className={styles.title}
             onNavigate={handleCloseDrawer}
           >
@@ -48,6 +49,7 @@ export default function MobileNav({ navQueryResult }: Props) {
         open={drawerOpen}
         navQueryResult={navQueryResult}
         onClose={handleCloseDrawer}
+        lang={lang}
       />
     </div>
   );
