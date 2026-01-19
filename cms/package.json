@@ -11,7 +11,8 @@
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "typegen": "sanity schema extract && sanity typegen generate",
-    "translation:test": "tsx --env-file=.env ./translation/testPageTranslation.ts "
+    "translation:test": "tsx --env-file=.env ./translation/testPageTranslation.ts",
+    "seo-description:test": "tsx --env-file=.env ./seo/testSeoDescriptionGeneration.ts"
   },
   "keywords": [
     "sanity"
