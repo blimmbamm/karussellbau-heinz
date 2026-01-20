@@ -42,25 +42,31 @@ export const pageType = defineType({
       type: 'slug',
       options: {
         source: 'title',
-        isUnique: (value, context) => {
+        isUnique: async (value, context) => {
           const {document, getClient} = context
           const client = getClient({apiVersion: '2026-01-18'})
 
           if (!document?.language) return true
 
-          return client.fetch(
-            `count(*[
-          _type == "page" &&
-          slug.current == $slug &&
-          language == $language &&
-          _id != $id
-        ]) == 0`,
+          const baseId = document._id.replace(/^drafts\./, '')
+
+          const count = await client.fetch(
+            `
+              count(*[
+                _type == "page" &&
+                slug.current == $slug &&
+                language == $language &&
+                !(_id in [$id, "drafts." + $id])
+              ])
+            `,
             {
               slug: value,
               language: document.language,
-              id: document._id.replace(/^drafts\./, ''),
+              id: baseId,
             },
           )
+
+          return count === 0
         },
       },
       validation: (rule) =>
