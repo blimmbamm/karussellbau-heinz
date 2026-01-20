@@ -10,7 +10,13 @@ export const metadataType = defineType({
       title: 'Title',
       type: 'string',
     }),
-    
+
+    defineField({
+      name: 'seoTitle',
+      title: 'SEO Title',
+      type: 'string',
+    }),
+
     defineField({
       name: 'description',
       title: 'Description',
