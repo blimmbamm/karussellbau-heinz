@@ -387,9 +387,10 @@ export type MetadataQueryResult = {
 
 // Source: ..\web\src\sanity\queries.ts
 // Variable: slugsQuery
-// Query: *[    _type == "page" &&    defined(slug.current) &&    isHome != true  ]{    "slug": slug.current  }
+// Query: *[    _type == "page" &&    defined(slug.current) &&    isHome != true  ]{    "slug": slug.current,    language  }
 export type SlugsQueryResult = Array<{
   slug: string | null;
+  language: "de" | "en" | null;
 }>;
 
 // Source: ..\web\src\sanity\queries.ts
@@ -616,7 +617,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "metadata" && language == $lang][0]\n': MetadataQueryResult;
-    '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current\n  }\n': SlugsQueryResult;
+    '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current,\n    language\n  }\n': SlugsQueryResult;
     '\n  *[_type == "page" && isHome == true && language == $lang][0]{\n    _id,\n    title,\n    showPrevNextNav,\n    content[]{\n      ...,\n      _type == "video" => {\n        caption,\n        "url": file.asset->url,\n        "mimeType": file.asset->mimeType\n      }\n    }\n  }\n': HomepageQueryResult;
     '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true &&\n      language == $lang\n    ][0]{\n      _id,\n      title,\n      seoTitle,\n      description,\n      slug,      \n      showPrevNextNav,\n      content[]{\n        ...,\n        _type == "video" => {\n          caption,\n          "url": file.asset->url,\n          "mimeType": file.asset->mimeType\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation" && language == $lang][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
     '\n  *[_type == "navigation" && language == $lang][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          _key,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;

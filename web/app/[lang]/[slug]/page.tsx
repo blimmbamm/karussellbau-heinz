@@ -11,24 +11,17 @@ import TableOfContents from "../../../components/navigation/sub-navigation/Table
 import PortableTextRenderer from "../../../components/portable-text/renderer/PortableTextRenderer";
 import { Metadata } from "next";
 import { SITE_URL } from "../../../src/environment";
-import { SUPPORTED_LANGS } from "../../../i18n/i18n";
 
 export const dynamic = "error";
 export const revalidate = false;
 
 export async function generateStaticParams() {
-  const pages = await client.fetch<SlugsQueryResult>(
-    slugsQuery,
-    {},
-    { cache: "force-cache" },
-  );
+  const pages = await client.fetch<SlugsQueryResult>(slugsQuery);
 
-  return pages.flatMap((p) =>
-    SUPPORTED_LANGS.map((lang) => ({
-      lang,
-      slug: p.slug,
-    })),
-  );
+  return pages.map((p) => ({
+    lang: p.language,
+    slug: p.slug,
+  }));
 }
 
 export async function generateMetadata({

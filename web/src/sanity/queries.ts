@@ -10,7 +10,8 @@ export const slugsQuery = groq`
     defined(slug.current) &&
     isHome != true
   ]{
-    "slug": slug.current
+    "slug": slug.current,
+    language
   }
 `;
 
