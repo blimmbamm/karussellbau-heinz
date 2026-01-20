@@ -32,7 +32,7 @@ export async function generateMetadata({
   );
 
   return {
-    title: metadata?.title,
+    title: metadata?.seoTitle,
     description: metadata?.description,
     alternates: {
       canonical: `${SITE_URL}/${lang}`,
