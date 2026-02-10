@@ -24,7 +24,7 @@ type Props = {
 
 export default function PortableTextRenderer({ content }: Props) {
   return (
-    <div>
+    <div className={styles.root}>
       <PortableText
         value={content}
         components={{
