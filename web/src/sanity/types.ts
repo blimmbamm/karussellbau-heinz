@@ -13,6 +13,73 @@
  */
 
 // Source: schema.json
+export type VideoReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "video";
+};
+
+export type VideoRef = {
+  _type: "videoRef";
+  video?: VideoReference;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type Video = {
+  _id: string;
+  _type: "video";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  file?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  poster?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  caption?: string;
+  alt?: string;
+  autoplay?: boolean;
+  muted?: boolean;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
 export type Metadata = {
   _id: string;
   _type: "metadata";
@@ -29,23 +96,6 @@ export type HeadlineWithDate = {
   _type: "headlineWithDate";
   date?: string;
   title?: string;
-};
-
-export type SanityFileAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-};
-
-export type Video = {
-  _type: "video";
-  file?: {
-    asset?: SanityFileAssetReference;
-    media?: unknown;
-    _type: "file";
-  };
-  caption?: string;
 };
 
 export type PageReference = {
@@ -93,13 +143,6 @@ export type Navigation = {
       } & NavDropdown)
   >;
   language?: "de" | "en";
-};
-
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
 export type ImageGallery = {
@@ -164,7 +207,7 @@ export type BlockContent = Array<
     } & Table)
   | ({
       _key: string;
-    } & Video)
+    } & VideoRef)
   | ({
       _key: string;
     } & HeadlineWithDate)
@@ -184,22 +227,6 @@ export type Page = {
   isHome?: boolean;
   showPrevNextNav?: boolean;
   content?: BlockContent;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
 };
 
 export type Slug = {
@@ -332,22 +359,24 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | VideoReference
+  | VideoRef
+  | SanityFileAssetReference
+  | SanityImageAssetReference
+  | Video
+  | SanityImageCrop
+  | SanityImageHotspot
   | Metadata
   | HeadlineWithDate
-  | SanityFileAssetReference
-  | Video
   | PageReference
   | NavDropdownItem
   | NavDropdown
   | NavLink
   | Navigation
-  | SanityImageAssetReference
   | ImageGallery
   | ColumnText
   | BlockContent
   | Page
-  | SanityImageCrop
-  | SanityImageHotspot
   | Slug
   | Link
   | Anchor
@@ -364,13 +393,7 @@ export type AllSanitySchemaTypes =
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
-type ArrayOf<T> = Array<
-  T & {
-    _key: string;
-  }
->;
-
-// Source: ..\web\src\sanity\queries.ts
+// Source: ../web/src/sanity/queries.ts
 // Variable: metadataQuery
 // Query: *[_type == "metadata" && language == $lang][0]
 export type MetadataQueryResult = {
@@ -385,7 +408,7 @@ export type MetadataQueryResult = {
   language?: "de" | "en";
 } | null;
 
-// Source: ..\web\src\sanity\queries.ts
+// Source: ../web/src/sanity/queries.ts
 // Variable: slugsQuery
 // Query: *[    _type == "page" &&    defined(slug.current) &&    isHome != true  ]{    "slug": slug.current,    language  }
 export type SlugsQueryResult = Array<{
@@ -393,9 +416,9 @@ export type SlugsQueryResult = Array<{
   language: "de" | "en" | null;
 }>;
 
-// Source: ..\web\src\sanity\queries.ts
+// Source: ../web/src/sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "page" && isHome == true && language == $lang][0]{    _id,    title,    showPrevNextNav,    content[]{      ...,      _type == "video" => {        caption,        "url": file.asset->url,        "mimeType": file.asset->mimeType      }    }  }
+// Query: *[_type == "page" && isHome == true && language == $lang][0]{    _id,    title,    showPrevNextNav,    content[]{      ...,      _type == "videoRef" => @-> {        caption,        title,        muted,        autoplay,        "url": file.asset->url,        "poster": poster.asset->url      }    }  }
 export type HomepageQueryResult = {
   _id: string;
   title: string | null;
@@ -468,22 +491,15 @@ export type HomepageQueryResult = {
       }
     | {
         _key: string;
-        _type: "video";
-        file?: {
-          asset?: SanityFileAssetReference;
-          media?: unknown;
-          _type: "file";
-        };
-        caption: string | null;
-        url: string | null;
-        mimeType: string | null;
+        _type: "videoRef";
+        video?: VideoReference;
       }
   > | null;
 } | null;
 
-// Source: ..\web\src\sanity\queries.ts
+// Source: ../web/src/sanity/queries.ts
 // Variable: pageBySlugQuery
-// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true &&      language == $lang    ][0]{      _id,      title,      seoTitle,      description,      slug,            showPrevNextNav,      content[]{        ...,        _type == "video" => {          caption,          "url": file.asset->url,          "mimeType": file.asset->mimeType        }      },      "slug": slug.current,      "navContext": *[_type == "navigation" && language == $lang][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0] {          ...,          items[]{            ...,            "slug": page->slug.current          }        }      }    }  }
+// Query: {    "page": *[      _type == "page" &&      slug.current == $slug &&       isHome != true &&      language == $lang    ][0]{      _id,      title,      seoTitle,      description,      slug,            showPrevNextNav,      content[]{        ...,        _type == "videoRef" => {          ...,          video->{            caption,            title,            muted,            autoplay,            "url": file.asset->url,            "poster": poster.asset->url          }        }      },      "slug": slug.current,      "navContext": *[_type == "navigation" && language == $lang][0]{        "dropdown": items[          _type == "navDropdown" &&           (count(items[page._ref == ^.^.^._id]) > 0)        ][0] {          ...,          items[]{            ...,            "slug": page->slug.current          }        }      }    }  }
 export type PageBySlugQueryResult = {
   page: {
     _id: string;
@@ -560,15 +576,15 @@ export type PageBySlugQueryResult = {
         }
       | {
           _key: string;
-          _type: "video";
-          file?: {
-            asset?: SanityFileAssetReference;
-            media?: unknown;
-            _type: "file";
-          };
-          caption: string | null;
-          url: string | null;
-          mimeType: string | null;
+          _type: "videoRef";
+          video: {
+            caption: string | null;
+            title: string | null;
+            muted: boolean | null;
+            autoplay: boolean | null;
+            url: string | null;
+            poster: string | null;
+          } | null;
         }
     > | null;
     navContext: {
@@ -588,7 +604,7 @@ export type PageBySlugQueryResult = {
   } | null;
 };
 
-// Source: ..\web\src\sanity\queries.ts
+// Source: ../web/src/sanity/queries.ts
 // Variable: navigationQuery
 // Query: *[_type == "navigation" && language == $lang][0]{    items[]{      _type,      _key,      label,      _type == "navLink" => {        "slug": page->slug.current      },      _type == "navDropdown" => {        items[]{          label,          _key,          "slug": page->slug.current        }      }    }  }
 export type NavigationQueryResult = {
@@ -618,8 +634,8 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "metadata" && language == $lang][0]\n': MetadataQueryResult;
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    isHome != true\n  ]{\n    "slug": slug.current,\n    language\n  }\n': SlugsQueryResult;
-    '\n  *[_type == "page" && isHome == true && language == $lang][0]{\n    _id,\n    title,\n    showPrevNextNav,\n    content[]{\n      ...,\n      _type == "video" => {\n        caption,\n        "url": file.asset->url,\n        "mimeType": file.asset->mimeType\n      }\n    }\n  }\n': HomepageQueryResult;
-    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true &&\n      language == $lang\n    ][0]{\n      _id,\n      title,\n      seoTitle,\n      description,\n      slug,      \n      showPrevNextNav,\n      content[]{\n        ...,\n        _type == "video" => {\n          caption,\n          "url": file.asset->url,\n          "mimeType": file.asset->mimeType\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation" && language == $lang][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
+    '\n  *[_type == "page" && isHome == true && language == $lang][0]{\n    _id,\n    title,\n    showPrevNextNav,\n    content[]{\n      ...,\n      _type == "videoRef" => @-> {\n        caption,\n        title,\n        muted,\n        autoplay,\n        "url": file.asset->url,\n        "poster": poster.asset->url\n      }\n    }\n  }\n': HomepageQueryResult;
+    '\n  {\n    "page": *[\n      _type == "page" &&\n      slug.current == $slug && \n      isHome != true &&\n      language == $lang\n    ][0]{\n      _id,\n      title,\n      seoTitle,\n      description,\n      slug,      \n      showPrevNextNav,\n      content[]{\n        ...,\n        _type == "videoRef" => {\n          ...,\n          video->{\n            caption,\n            title,\n            muted,\n            autoplay,\n            "url": file.asset->url,\n            "poster": poster.asset->url\n          }\n        }\n      },\n      "slug": slug.current,\n      "navContext": *[_type == "navigation" && language == $lang][0]{\n        "dropdown": items[\n          _type == "navDropdown" && \n          (count(items[page._ref == ^.^.^._id]) > 0)\n        ][0] {\n          ...,\n          items[]{\n            ...,\n            "slug": page->slug.current\n          }\n        }\n      }\n    }\n  }\n': PageBySlugQueryResult;
     '\n  *[_type == "navigation" && language == $lang][0]{\n    items[]{\n      _type,\n      _key,\n      label,\n      _type == "navLink" => {\n        "slug": page->slug.current\n      },\n      _type == "navDropdown" => {\n        items[]{\n          label,\n          _key,\n          "slug": page->slug.current\n        }\n      }\n    }\n  }\n': NavigationQueryResult;
   }
 }

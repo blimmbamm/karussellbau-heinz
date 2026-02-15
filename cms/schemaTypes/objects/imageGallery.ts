@@ -20,7 +20,7 @@ export const imageGalleryType = defineType({
       ],
       validation: (rule) => rule.min(1),
       options: {
-        layout: 'grid', 
+        layout: 'grid',
       },
     }),
   ],

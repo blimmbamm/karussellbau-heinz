@@ -40,7 +40,7 @@ export const blockContentType = defineType({
       type: 'table',
     }),
     defineArrayMember({
-      type: 'video',
+      type: 'videoRef',
     }),
     defineArrayMember({
       type: 'headlineWithDate',

@@ -19,4 +19,5 @@ export type PageContent = NonNullable<
   NonNullable<PageBySlugQueryResult["page"]>["content"]
 >;
 
-export type VideoBlock = Extract<PageContent[number], { _type: "video" }>;
+export type VideoBlock = Extract<PageContent[number], { _type: "videoRef" }>;
+

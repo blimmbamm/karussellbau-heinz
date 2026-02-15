@@ -72,7 +72,7 @@ export default function PortableTextRenderer({ content }: Props) {
             table: (props: PortableTextTypeComponentProps<TableType>) => (
               <Table data={props.value} />
             ),
-            video: (props: PortableTextTypeComponentProps<VideoBlock>) => (
+            videoRef: (props: PortableTextTypeComponentProps<VideoBlock>) => (
               <Video data={props.value} />
             ),
             headlineWithDate: (

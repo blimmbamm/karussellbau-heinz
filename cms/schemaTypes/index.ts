@@ -1,6 +1,7 @@
 import {metadataType} from './documents/metadata'
 import {navigationType} from './documents/navigation'
 import {pageType} from './documents/page'
+import {videoType} from './documents/video'
 import {blockContentType} from './objects/blockContent'
 import {headlineWithDateType} from './objects/headlineWithDate'
 import {imageGalleryType} from './objects/imageGallery'
@@ -10,7 +11,7 @@ import {linkAnnotation} from './objects/navigation/link'
 import {navDropdownType} from './objects/navigation/navDropdown'
 import {navDropdownItemType} from './objects/navigation/navDropdownItem'
 import {navLinkType} from './objects/navigation/navLink'
-import {videoType} from './objects/video'
+import {videoRefType} from './objects/videoRef'
 
 export const schemaTypes = [
   anchorAnnotation,
@@ -23,7 +24,9 @@ export const schemaTypes = [
   navLinkType,
   navDropdownType,
   navDropdownItemType,
-  videoType,
+  // videoBlockType,
   headlineWithDateType,
   metadataType,
+  videoType,
+  videoRefType,
 ]

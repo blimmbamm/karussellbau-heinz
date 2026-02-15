@@ -7,7 +7,7 @@ import {deployTool} from './plugins/deployTool'
 
 export default defineConfig({
   name: 'default',
-  title: 'cms',
+  title: 'Karussellbau Heinz CMS',
 
   projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_DATASET!,

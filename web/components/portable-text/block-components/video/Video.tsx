@@ -6,7 +6,7 @@ type Props = {
 };
 
 export default function Video({ data }: Props) {
-  const { url, caption } = data;
+  const { url, caption, autoplay, muted } = data.video || {};
 
   if (!url) return null;
 
@@ -18,6 +18,8 @@ export default function Video({ data }: Props) {
           src={url}
           controls
           preload="metadata"
+          muted={Boolean(muted)}
+          autoPlay={Boolean(autoplay)}
         ></video>
         {caption && (
           <figcaption className={styles.caption}>{caption}</figcaption>

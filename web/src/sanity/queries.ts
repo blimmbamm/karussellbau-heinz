@@ -22,10 +22,16 @@ export const homepageQuery = groq`
     showPrevNextNav,
     content[]{
       ...,
-      _type == "video" => {
-        caption,
-        "url": file.asset->url,
-        "mimeType": file.asset->mimeType
+      _type == "videoRef" => {
+        ...,
+        video->{
+          caption,
+          title,
+          muted,
+          autoplay,
+          "url": file.asset->url,
+          "poster": poster.asset->url
+        }
       }
     }
   }
@@ -47,10 +53,16 @@ export const pageBySlugQuery = groq`
       showPrevNextNav,
       content[]{
         ...,
-        _type == "video" => {
-          caption,
-          "url": file.asset->url,
-          "mimeType": file.asset->mimeType
+        _type == "videoRef" => {
+          ...,
+          video->{
+            caption,
+            title,
+            muted,
+            autoplay,
+            "url": file.asset->url,
+            "poster": poster.asset->url
+          }
         }
       },
       "slug": slug.current,
