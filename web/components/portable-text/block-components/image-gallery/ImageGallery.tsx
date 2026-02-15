@@ -16,7 +16,7 @@ export default function ImageGallery({ images }: Props) {
     useState<ImageGalleryImageType | null>(null);
 
   const startIndex = images?.findIndex(
-    (image) => image._key === fullscreenStartImg?._key
+    (image) => image._key === fullscreenStartImg?._key,
   );
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function ImageGallery({ images }: Props) {
           <div className={styles["fullscreen-carousel-container"]}>
             <ImageCarousel
               images={images}
-              src={(img) => urlFor(img).url()}
+              src={(img) => urlFor(img).height(800).fit('max').url()}
               startIndex={startIndex}
               showCaption
             />

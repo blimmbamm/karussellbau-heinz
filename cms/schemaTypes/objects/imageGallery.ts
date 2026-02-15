@@ -1,32 +1,35 @@
-import { defineType, defineField } from "sanity";
+import {defineType, defineField} from 'sanity'
 
 export const imageGalleryType = defineType({
-  name: "imageGallery",
-  title: "Image Gallery",
-  type: "object",
+  name: 'imageGallery',
+  title: 'Image Gallery',
+  type: 'object',
   fields: [
     defineField({
-      name: "images",
-      title: "Images",
-      type: "array",
+      name: 'images',
+      title: 'Images',
+      type: 'array',
       of: [
         {
-          type: "image",
+          type: 'image',
           fields: [
-            { name: "caption", type: "string" },
-            { name: "alt", type: "string" },
+            {name: 'caption', type: 'string'},
+            {name: 'alt', type: 'string'},
           ],
         },
       ],
-      validation: rule => rule.min(1),
+      validation: (rule) => rule.min(1),
+      options: {
+        layout: 'grid', 
+      },
     }),
   ],
   preview: {
-    select: { images: "images" },
-    prepare({ images }) {
+    select: {images: 'images'},
+    prepare({images}) {
       return {
-        title: `Gallery (${images?.length || 0} images)`
-      };
+        title: `Gallery (${images?.length || 0} images)`,
+      }
     },
   },
-});
+})
