@@ -4,7 +4,6 @@ export const videoType = defineType({
   name: 'video',
   title: 'Video',
   type: 'document',
-
   fields: [
     defineField({
       name: 'title',

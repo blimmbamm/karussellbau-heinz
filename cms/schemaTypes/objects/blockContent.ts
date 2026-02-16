@@ -37,6 +37,9 @@ export const blockContentType = defineType({
       type: 'imageGallery',
     }),
     defineArrayMember({
+      type: 'imagesRef',
+    }),
+    defineArrayMember({
       type: 'table',
     }),
     defineArrayMember({

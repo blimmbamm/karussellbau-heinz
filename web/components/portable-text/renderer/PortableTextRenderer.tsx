@@ -3,7 +3,7 @@ import {
   PortableTextMarkComponentProps,
   PortableTextTypeComponentProps,
 } from "next-sanity";
-import { PageContent, VideoBlock } from "../../../src/types";
+import { ImagesType, PageContent, VideoBlock } from "../../../src/types";
 import {
   Anchor,
   ColumnText,
@@ -64,7 +64,7 @@ export default function PortableTextRenderer({ content }: Props) {
               </div>
             ),
             imageGallery: (
-              props: PortableTextTypeComponentProps<ImageGalleryType>
+              props: PortableTextTypeComponentProps<ImageGalleryType>,
             ) =>
               props.value.images && (
                 <ImageGallery images={props.value.images} />
@@ -76,8 +76,12 @@ export default function PortableTextRenderer({ content }: Props) {
               <Video data={props.value} />
             ),
             headlineWithDate: (
-              props: PortableTextTypeComponentProps<HeadlineWithDateType>
+              props: PortableTextTypeComponentProps<HeadlineWithDateType>,
             ) => <HeadlineWithDate data={props.value} />,
+            images: (props: PortableTextTypeComponentProps<ImagesType>) =>
+              props.value.images && (
+                <ImageGallery images={props.value.images} />
+              ),
           },
         }}
       />

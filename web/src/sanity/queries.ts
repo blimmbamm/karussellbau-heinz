@@ -32,6 +32,9 @@ export const homepageQuery = groq`
           "url": file.asset->url,
           "poster": poster.asset->url
         }
+      },
+      _type == "imagesRef" => {
+        ...images->
       }
     }
   }
@@ -63,6 +66,9 @@ export const pageBySlugQuery = groq`
             "url": file.asset->url,
             "poster": poster.asset->url
           }
+        },
+        _type == "imagesRef" => {
+          ...images->
         }
       },
       "slug": slug.current,
