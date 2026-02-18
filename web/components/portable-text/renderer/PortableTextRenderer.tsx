@@ -78,9 +78,9 @@ export default function PortableTextRenderer({ content }: Props) {
             headlineWithDate: (
               props: PortableTextTypeComponentProps<HeadlineWithDateType>,
             ) => <HeadlineWithDate data={props.value} />,
-            images: (props: PortableTextTypeComponentProps<ImagesType>) =>
+            imagesRef: (props: PortableTextTypeComponentProps<ImagesType>) =>
               props.value.images && (
-                <ImageGallery images={props.value.images} />
+                <ImageGallery images={props.value.images.images} />
               ),
           },
         }}

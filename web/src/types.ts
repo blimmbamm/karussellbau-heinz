@@ -21,4 +21,4 @@ export type PageContent = NonNullable<
 
 export type VideoBlock = Extract<PageContent[number], { _type: "videoRef" }>;
 
-export type ImagesType = Extract<PageContent[number], { _type: "images" }>;
+export type ImagesType = Extract<PageContent[number], { _type: "imagesRef" }>;

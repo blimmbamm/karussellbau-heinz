@@ -4,6 +4,6 @@ import { SANITY_DATASET, SANITY_PROJECT_ID } from "../environment";
 export const client = createClient({
   projectId: SANITY_PROJECT_ID,
   dataset: SANITY_DATASET,
-  apiVersion: "2024-01-01",
+  apiVersion: "2026-02-18",
   useCdn: false,
 });

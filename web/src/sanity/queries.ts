@@ -34,7 +34,10 @@ export const homepageQuery = groq`
         }
       },
       _type == "imagesRef" => {
-        ...images->
+        ...,
+        images->{
+          ...
+        }
       }
     }
   }
@@ -68,7 +71,8 @@ export const pageBySlugQuery = groq`
           }
         },
         _type == "imagesRef" => {
-          ...images->
+          ...,
+          "images": images->
         }
       },
       "slug": slug.current,
