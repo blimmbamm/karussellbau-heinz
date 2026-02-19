@@ -17,6 +17,8 @@
 
 .title-container {
   flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .title {
@@ -29,6 +31,12 @@
   font-family: var(--font-great-vibes);
   font-weight: bold;
   color: var(--font-color-dark-brown);
+}
+
+@media (max-width: 400px) {
+  .title {
+    font-size: 2.2rem;
+  }
 }
 
 .menu-toggle {
