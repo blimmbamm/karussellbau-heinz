@@ -9,9 +9,9 @@ export default function HeadlineWithDate({ data }: Props) {
   const { date, title } = data;
 
   return (
-    <>
+    <div className={styles.root}>
       <p className={styles.date}>{date}</p>
       <h2 className={styles.title}>{title}</h2>
-    </>
+    </div>
   );
 }

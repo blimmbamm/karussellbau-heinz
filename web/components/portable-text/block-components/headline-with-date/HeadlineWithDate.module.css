@@ -1,6 +1,13 @@
-.date {
-  margin-bottom: 0;
+.root {
   margin-top: 2em;
+}
+
+.root:first-of-type {
+  margin-top: 1em;
+}
+
+.date {
+  margin-block: 0;
   font-size: 1.1rem;
   font-style: italic;
 }
