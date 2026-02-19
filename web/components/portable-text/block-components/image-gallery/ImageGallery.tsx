@@ -29,6 +29,18 @@ export default function ImageGallery({ images }: Props) {
     return unlockBodyScroll;
   }, [fullscreenStartImg]);
 
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setFullscreenStartImg(null);
+    }
+
+    if (fullscreenStartImg) {
+      window.addEventListener("keydown", onKeyDown);
+    }
+
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [fullscreenStartImg]);
+
   return (
     <>
       <ImageCarousel
@@ -46,7 +58,7 @@ export default function ImageGallery({ images }: Props) {
           <div className={styles["fullscreen-carousel-container"]}>
             <ImageCarousel
               images={images}
-              src={(img) => urlFor(img).height(800).fit('max').url()}
+              src={(img) => urlFor(img).height(800).fit("max").url()}
               startIndex={startIndex}
               showCaption
             />
